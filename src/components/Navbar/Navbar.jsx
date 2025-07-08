@@ -13,7 +13,7 @@ const Navbar = () => {
     </>
 
   return (
-    <div className=" backdrop-blur-2xl shadow-2xs py-3">
+    <div className="sticky top-0 z-50 backdrop-blur-3xl shadow-2xs py-3">
       <div className="navbar w-11/12 mx-auto">
         <div className="navbar-start">
           <div className="dropdown">

@@ -10,7 +10,7 @@ const Banner = () => {
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
-        autoplay={{ delay: 90000, disableOnInteraction: false }}
+        autoplay={{ delay: 5000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
         // navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
@@ -106,7 +106,7 @@ const Banner = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-slate-800 via-transparent to-transparent"></div>
 
                 {/* Top-Left Heading */}
-                <div className="absolute top-10 left-10 text-white z-10 space-y-4">
+                <div className="absolute top-18 left-18 text-white z-10 space-y-4">
                 <h2 className="text-4xl font-bold leading-tight">
                     Restoring Health, <br /> Rebuilding Lives
                 </h2>
@@ -119,7 +119,7 @@ const Banner = () => {
                 </div>
 
                 {/* Center Statistic/Highlight Box */}
-                <div className="absolute bottom-[140px] left-10 bg-white/10 backdrop-blur-md rounded-xl text-white px-6 py-4 z-10 shadow-lg w-[500px]">
+                <div className="absolute bottom-[140px] left-18 bg-white/10 backdrop-blur-md rounded-xl text-white px-6 py-4 z-10 shadow-lg w-[500px]">
                 <h3 className="text-xl font-semibold mb-4">Impact Snapshot</h3>
                 <ul className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm">
                     <li>120+ Dental Checkups</li>
@@ -145,7 +145,7 @@ const Banner = () => {
     className="relative w-full h-[750px] bg-cover bg-center"
     style={{
       backgroundImage:
-        "url('https://res.cloudinary.com/dv6p7mprd/image/upload/v1751985911/close-up-medical-team-ready-work_x9ddrn.jpg')",
+        "url('https://res.cloudinary.com/dv6p7mprd/image/upload/v1751991835/close-up-medical-team-ready-hwork_nhfvkd.jpg')",
     }}
   >
     {/* Dark Overlay */}
@@ -183,23 +183,7 @@ const Banner = () => {
   </div>
 </SwiperSlide>
 
-        {/* <SwiperSlide>
-          <div
-            className="relative w-full h-[750px] bg-cover bg-center"
-            style={{
-              backgroundImage:
-                "url('https://res.cloudinary.com/dv6p7mprd/image/upload/v1751980348/close-up-medical-team-ready-hwork_exaphc.jpg')",
-            }}
-          >
-            <div className="absolute inset-0  bg-opacity-40"></div>
-            <div className="absolute top-6 left-6 text-white z-10">
-              <h2 className="text-3xl md:text-4xl font-bold">Accessible Medical Services</h2>
-            </div>
-            <div className="absolute bottom-6 right-6 text-white z-10">
-              <p className="text-lg md:text-xl font-medium">Anywhere. Anytime. For Everyone.</p>
-            </div>
-          </div>
-        </SwiperSlide> */}
+        
 
       </Swiper>
     </div>
