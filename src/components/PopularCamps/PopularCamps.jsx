@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 
 const campData = [
   {
@@ -69,7 +70,7 @@ const PopularCamps = () => {
           <div className="text-center py-26 pb-8">
               <h1 className="poppins text-5xl font-bold">Popular Medical Camps</h1>
           </div>
-        <div className="w-11/12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mx-auto p-8">
+        <div className="w-11/12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mx-auto p-8 ">
         {campData.map((camp) => (
             <div
             key={camp.id}
@@ -126,7 +127,10 @@ const PopularCamps = () => {
             </div>
             </div>
         ))}
-        </div>          
+        </div> 
+        <div className="mb-32 flex items-center justify-center p-8">
+            <Link className="text-xl poppins text-white bg-[#1e74d2] hover:to-blue-500 rounded-md py-1.5 px-4 ">See All</Link>            
+        </div>         
     </div>
   );
 };
