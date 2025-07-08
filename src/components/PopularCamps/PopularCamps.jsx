@@ -68,7 +68,7 @@ const PopularCamps = () => {
   return (
       <div>
           <div className="text-center py-26 pb-8">
-              <h1 className="poppins text-5xl font-bold">Popular Medical Camps</h1>
+              <h1 className="poppins text-4xl font-bold">Popular Medical Camps</h1>
           </div>
         <div className="w-11/12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mx-auto p-8 ">
         {campData.map((camp) => (
@@ -89,7 +89,7 @@ const PopularCamps = () => {
 
             <div className="p-6">
                 <h3
-                className="text-2xl font-bold text-slate-800 mb-3 truncate"
+                className="text-2xl poppins font-bold text-slate-800 mb-3 truncate"
                 title={camp.name}
                 >
                 {camp.name}
@@ -129,7 +129,7 @@ const PopularCamps = () => {
         ))}
         </div> 
         <div className="mb-32 flex items-center justify-center p-8">
-            <Link className="text-xl poppins text-white bg-[#1e74d2] hover:to-blue-500 rounded-md py-1.5 px-4 ">See All</Link>            
+            <Link className="text-2xl poppins text-white bg-[#1e74d2] hover:to-blue-500 rounded-md py-2 px-5 ">See All</Link>            
         </div>         
     </div>
   );

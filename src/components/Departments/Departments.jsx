@@ -15,7 +15,7 @@ const Departments = () => {
 
                     <div className="relative z-10 p-8 sm:p-12">
                         <div className="text-center mb-12">
-                        <h2 className="text-4xl font-bold text-slate-800 tracking-tight">
+                        <h2 className="text-4xl poppins font-bold text-slate-800 tracking-tight">
                             Our Core Departments
                         </h2>
                         <p className="mt-3 text-lg max-w-2xl mx-auto text-slate-600">

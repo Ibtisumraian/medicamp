@@ -3,11 +3,11 @@ import React from 'react';
 const ApproachToCare = () => {
     return (
         <div>
-            <section className=" py-20 px-4 sm:px-6 lg:px-8">
+            <section className=" py-20 px-4 sm:px-6 lg:px-8 mb-32">
                     <div className="w-11/12 mx-auto">
 
                         <div className="text-center">
-                        <h2 className="text-4xl font-bold text-slate-800 tracking-tight">
+                        <h2 className="text-4xl poppins font-bold text-slate-800 tracking-tight">
                             Our Approach to Care
                         </h2>
                         <p className="mt-4 text-lg max-w-3xl mx-auto text-slate-600">
@@ -29,7 +29,7 @@ const ApproachToCare = () => {
                                 <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
                                 </svg>
                             </div>
-                            <h3 className="mt-6 text-2xl font-bold text-slate-800">
+                            <h3 className="mt-6 text-2xl poppins font-bold text-slate-800">
                                 <span className="text-[#1e74d2]">01.</span> Community Planning
                             </h3>
                             <p className="mt-4 text-slate-600">
@@ -43,7 +43,7 @@ const ApproachToCare = () => {
                                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                                 </svg>
                             </div>
-                            <h3 className="mt-6 text-2xl font-bold text-slate-800">
+                            <h3 className="mt-6 text-2xl poppins font-bold text-slate-800">
                                 <span className="text-[#1e74d2]">02.</span> Compassionate Care
                             </h3>
                             <p className="mt-4 text-slate-600">
@@ -57,7 +57,7 @@ const ApproachToCare = () => {
                                 <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
                                 </svg>
                             </div>
-                            <h3 className="mt-6 text-2xl font-bold text-slate-800">
+                            <h3 className="mt-6 text-2xl poppins font-bold text-slate-800">
                                 <span className="text-[#1e74d2]">03.</span> Impact & Follow-up
                             </h3>
                             <p className="mt-4 text-slate-600">
