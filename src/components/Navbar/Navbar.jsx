@@ -1,12 +1,12 @@
 import React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import './nav.css'
 
 const Navbar = () => {
 
     const links = <>
-        <NavLink>Home</NavLink>
+        <NavLink to='/'>Home</NavLink>
         <NavLink>Available Camps</NavLink>
         {/* <NavLink></NavLink>
         <NavLink></NavLink> */}
@@ -42,7 +42,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end ">
-          <NavLink className="text-base">Join Us</NavLink>
+          <Link to='/SignIn' className="text-base border border-gray-300 rounded-2xl py-2 px-4">Join Us</Link>
         </div>
       </div>
     </div>
