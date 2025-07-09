@@ -104,10 +104,10 @@ const PopularCamps = () => {
                     <svg className="h-5 w-5 text-[#1e74d2] mr-3" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" /></svg>
                     <span>{camp.location}</span>
                 </div>
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                     <svg className="h-5 w-5 text-[#1e74d2] mr-3" viewBox="0 0 20 20" fill="currentColor"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" /></svg>
                     <span>Led by: <span className="font-medium">{camp.doctor}</span></span>
-                </div>
+                </div> */}
                 </div>
             </div>
 
@@ -117,13 +117,13 @@ const PopularCamps = () => {
                 <span>{camp.participants}</span>
                 </div>
 
-                <a
-                href={`/camp-details/${camp.id}`}
+                <Link
+                to={`/CampDetails/${camp.id}`}            
                 className="bg-[#1e74d2] text-white font-semibold px-5 py-2.5 rounded-lg transition-all duration-300 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center group-hover:pl-4 group-hover:pr-6"
                 >
                 Details
                 <svg className="h-5 w-5 ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
-                </a>
+                </Link>
             </div>
             </div>
         ))}
