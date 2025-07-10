@@ -1,7 +1,7 @@
 import React from 'react';
 import { signOut } from 'firebase/auth';
 import { Link, NavLink, Outlet } from 'react-router';
-import { toast, Bounce } from 'react-toastify';
+import { toast, Bounce, ToastContainer } from 'react-toastify';
 import { auth } from '../components/firebase/firebase.init';
 import { GoHome, GoSignOut } from 'react-icons/go';
 import { MdOutlineDashboard, MdOutlinePerson,MdOutlineAddLocation,MdOutlineSettings} from 'react-icons/md';
@@ -47,16 +47,17 @@ const Dashboard = () => {
 
     const sidebarLinks = (
         <>
-            <Link className='flex items-center gap-2 mb-4' to="/Dashboard" ><MdOutlineDashboard size={22} /> Overview</Link>
-            <Link className='flex items-center gap-2 mb-4' to="/Dashboard/OrganizerProfile" ><MdOutlinePerson size={22} />Profile</Link>
-            <Link className='flex items-center gap-2 mb-4' to="/Dashboard/add-camp" ><MdOutlineAddLocation size={22} />Add a Camp</Link>
-            <Link className='flex items-center gap-2 mb-4' to="/Dashboard/manage-camps" ><MdOutlineSettings size={22} />Manage Camps</Link>
-            <Link className='flex items-center gap-2 mb-4' to="/Dashboard/manage-registrations" ><BsCheck2Square size={22} />Manage Registrations</Link>
+            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard" ><MdOutlineDashboard size={22} /> Overview</Link>
+            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/OrganizerProfile" ><MdOutlinePerson size={22} />Profile</Link>
+            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/add-camp" ><MdOutlineAddLocation size={22} />Add a Camp</Link>
+            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/manage-camps" ><MdOutlineSettings size={22} />Manage Camps</Link>
+            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/manage-registrations" ><BsCheck2Square size={22} />Manage Registrations</Link>
         </>
     );
 
     return (
         <div className="flex h-screen bg-slate-50 overflow-hidden">
+            <ToastContainer />
             {/* --- DESKTOP SIDEBAR --- */}
             <aside className="w-72 bg-gradient-to-br from-[#e5f2fa] to-[#a7d4f9] sticky top-0 h-screen hidden lg:flex flex-col p-6">
                 <div className="flex items-center gap-3 mb-10">
@@ -74,7 +75,7 @@ const Dashboard = () => {
                     <Link className='flex items-center gap-2 text-gray-600'  to="/"><GoHome size={22} />Back to Home</Link>
                     <button
                         onClick={handleSignOut}
-                        className="flex items-center gap-4 w-full mt-2 py-3 rounded-xl text-red-500 font-semibold transition-all duration-300 hover:bg-red-100"
+                        className="flex items-center gap-4 w-full mt-2 py-3 rounded-xl text-red-400 font-semibold transition-all duration-300 hover:bg-red-100"
                     >
                         <GoSignOut size={22} />
                         <span>Logout</span>
@@ -112,7 +113,7 @@ const Dashboard = () => {
                                 <Link className='flex items-center gap-2 text-gray-600' to="/"><GoHome size={22} />Back to Home</Link>
                                 <button
                                     onClick={handleSignOut}
-                                    className="flex items-center gap-4 w-full mt-2 py-3 rounded-xl text-red-500 font-semibold transition-all duration-300 hover:bg-red-100"
+                                    className="flex items-center gap-4 w-full mt-2 py-3 rounded-xl text-red-400 font-semibold transition-all duration-300 hover:bg-red-100"
                                 >
                                     <GoSignOut size={22} />
                                     <span>Sign Out</span>
