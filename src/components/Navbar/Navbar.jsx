@@ -79,7 +79,7 @@ const Navbar = () => {
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                 <div className="w-12 rounded-full border-3 border-[#1e74d2]">
-                  <img src={user.photoURL || 'https://i.ibb.co/YTsRKgQ/default-avatar.png'} />
+                  <img src={user.photoURL || ' '} />
                 </div>
               </div>
               <ul
