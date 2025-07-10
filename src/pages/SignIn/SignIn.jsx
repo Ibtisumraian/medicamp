@@ -1,16 +1,54 @@
 import React from 'react';
 // Corrected import for modern react-router-dom (v6+)
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import useAuth from '../../hooks/useAuth/useAuth';
+import { Bounce, toast } from 'react-toastify';
 
 const SignIn = () => {
+    const { userSignInWithGoogle } = useAuth()
+    const navigate = useNavigate()
 
     const handleSignIn = (e) => {
         e.preventDefault()
         const email = e.target.email.value
         const password = e.target.password.value
         console.log(email, password);
-        
     }
+
+    const handleGoogleSignIn = () => {
+        userSignInWithGoogle()
+        .then(()=>{
+            toast.success('Signed in successfully!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                transition: Bounce,
+            });
+            navigate(location?.state || '/')
+        })
+        .catch(error => {
+            if (error) {
+                toast.error('There was a problem signing in with Google!', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    transition: Bounce,
+                    })
+            }
+        })
+    }
+    
+  
   return (
     <div className=" flex items-center justify-center p-4 mt-8 mb-32">
       <div className="w-full max-w-4xl mx-auto">
@@ -121,7 +159,7 @@ const SignIn = () => {
 
               {/* Google Sign-In Button */}
               <div>
-                <button type="button" className="flex w-full items-center justify-center gap-3 cursor-pointer rounded-lg border border-slate-300 bg-white py-3 px-4 text-center font-semibold text-slate-800 shadow-sm hover:bg-slate-50 transition-all">
+                <button onClick={handleGoogleSignIn} type="button" className="flex w-full items-center justify-center gap-3 cursor-pointer rounded-lg border border-slate-300 bg-white py-3 px-4 text-center font-semibold text-slate-800 shadow-sm hover:bg-slate-50 transition-all">
                   <svg className="h-6 w-6" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clipPath="url(#clip0_17_80)">
                       <path d="M47.532 24.552c0-1.566-.14-3.084-.405-4.548h-23.01v8.59h13.01c-.563 2.76-2.156 5.17-4.64 6.813v5.56h7.15c4.188-3.858 6.59-9.522 6.59-16.415z" fill="#4285F4"/>

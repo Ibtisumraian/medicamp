@@ -80,7 +80,7 @@ const FeedbackAndRatings = () => {
     //         </div>
     //     </div>
     // </section>
-    <section className="bg-gradient-to-br from-[#e5f2fa] to-[#a7d4f9] py-20 px-4 sm:px-6 lg:px-8">
+    <section className="bg-gradient-to-br from-[#e5f2fa] to-transparent py-20 px-4 sm:px-6 lg:px-8">
   <div className="w-11/12 mx-auto">
     <div className="text-center">
       <h2 className="text-4xl poppins font-bold text-slate-800 tracking-tight">

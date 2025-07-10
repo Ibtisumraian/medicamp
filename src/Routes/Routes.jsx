@@ -4,6 +4,7 @@ import Home from "../pages/Home/Home";
 import CampDetails from "../pages/CampDetails/CampDetails";
 import SignIn from "../pages/SignIn/SignIn";
 import SignUp from "../pages/SignUp/SignUp";
+import PrivateRoute from "../hooks/PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -16,7 +17,7 @@ export const router = createBrowserRouter([
         },
         {
           path: '/CampDetails/:id',
-          element: <CampDetails/>
+          element: <PrivateRoute><CampDetails/></PrivateRoute>
         },
         {
           path: '/SignIn',

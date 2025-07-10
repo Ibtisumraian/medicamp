@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { MdDoneAll } from 'react-icons/md';
 import { FaRegRectangleXmark } from 'react-icons/fa6';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import useAuth from '../../hooks/useAuth/useAuth';
+import { Bounce, toast } from 'react-toastify';
 
 const SignUp = () => {
-        // State for the password field
+        const { userSignInWithGoogle } = useAuth()
         const [password, setPassword] = useState('');
         const [isPasswordFocused, setIsPasswordFocused] = useState(false);
-    
-        // State for each validation rule
+        const navigate = useNavigate()
+
         const [validations, setValidations] = useState({
             hasLower: false,
             hasUpper: false,
@@ -16,7 +18,6 @@ const SignUp = () => {
             isLongEnough: false,
         });
     
-        //  Re-run validation whenever the password changes
         useEffect(() => {
             setValidations({
                 hasLower: /[a-z]/.test(password),
@@ -27,10 +28,44 @@ const SignUp = () => {
         }, [password]);
     
         const handlePasswordFocus = () => setIsPasswordFocused(true);
-        const handlePasswordBlur = () => setIsPasswordFocused(false);
+        const handlePasswordBlur = () => setIsPasswordFocused(false);        
+        const isPasswordValid = Object.values(validations).every(Boolean);
         
-        // Determine if all validations have passed
-    const isPasswordValid = Object.values(validations).every(Boolean);
+    
+    const handleGoogleSignIn = () => {
+        userSignInWithGoogle()
+        .then(()=>{
+            toast.success('Signed in successfully!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                transition: Bounce,
+            });
+            navigate(location?.state || '/')
+        })
+        .catch(error => {
+            if (error) {
+                toast.error('There was a problem signing in with Google!', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    transition: Bounce,
+                    })
+            }
+        })
+    }
+
+
     
   return (
     <div className="flex items-center justify-center p-4 mt-8 mb-32">
@@ -106,48 +141,48 @@ const SignUp = () => {
 
                   {/* Password Input */}
                   <div>
-                                                          <label htmlFor="password" className="block text-sm font-medium text-slate-700">
-                                                              Password
-                                                          </label>
-                                                          <div className="mt-1 relative rounded-md shadow-sm">
-                                                              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                                                  <svg className="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                                      <path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd" />
-                                                                  </svg>
-                                                              </div>
-                                                              <input
-                                                                  type="password"
-                                                                  name="password"
-                                                                  id="password"
-                                                                  required
-                                                                  className="block w-full rounded-lg border-slate-300 pl-10 py-3 focus:border-[#1e74d2] focus:ring-[#1e74d2]"
-                                                                  placeholder="••••••••"
-                                                                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}$"
-                                                                  title="Password must be at least 6 characters long and include one uppercase letter, one lowercase letter, and one number."
-                                                                  value={password}
-                                                                  onChange={(e) => setPassword(e.target.value)}
-                                                                  onFocus={handlePasswordFocus}
-                                                                  onBlur={handlePasswordBlur}
-                                                              />
-                                                          </div>
-                                                          {/* Conditionally render the validation hints */}
-                                                          {isPasswordFocused && !isPasswordValid && (
-                                                              <div className="mt-2 pl-1 space-y-1">
-                                                                  <p className={`text-xs flex items-center ${validations.isLongEnough ? 'text-green-600' : 'text-red-500'}`}>
-                                                                      <span className="mr-2">{validations.isLongEnough ? <MdDoneAll className='text-base' /> : <FaRegRectangleXmark className='text-base text-red-400' /> }</span> At least 6 characters
-                                                                  </p>
-                                                                  <p className={`text-xs flex items-center ${validations.hasLower ? 'text-green-600' : 'text-red-500'}`}>
-                                                                      <span className="mr-2">{validations.hasLower ? <MdDoneAll className='text-base' /> : <FaRegRectangleXmark className='text-base text-red-400' />}</span> One lowercase letter
-                                                                  </p>
-                                                                  <p className={`text-xs flex items-center ${validations.hasUpper ? 'text-green-600' : 'text-red-500'}`}>
-                                                                      <span className="mr-2">{validations.hasUpper ? <MdDoneAll className='text-base' /> : <FaRegRectangleXmark className='text-base text-red-400' /> }</span> One uppercase letter
-                                                                  </p>
-                                                                  <p className={`text-xs flex items-center ${validations.hasNumber ? 'text-green-600' : 'text-red-500'}`}>
-                                                                      <span className="mr-2">{validations.hasNumber ? <MdDoneAll className='text-base' /> : <FaRegRectangleXmark className='text-base text-red-400' /> }</span> One number
-                                                                  </p>
-                                                              </div>
-                                                          )}
-                                                      </div>
+                    <label htmlFor="password" className="block text-sm font-medium text-slate-700">
+                        Password
+                    </label>
+                    <div className="mt-1 relative rounded-md shadow-sm">
+                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                            <svg className="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd" />
+                            </svg>
+                        </div>
+                        <input
+                            type="password"
+                            name="password"
+                            id="password"
+                            required
+                            className="block w-full rounded-lg border-slate-300 pl-10 py-3 focus:border-[#1e74d2] focus:ring-[#1e74d2]"
+                            placeholder="••••••••"
+                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}$"
+                            title="Password must be at least 6 characters long and include one uppercase letter, one lowercase letter, and one number."
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            onFocus={handlePasswordFocus}
+                            onBlur={handlePasswordBlur}
+                        />
+                    </div>
+                    {/* Conditionally render the validation hints */}
+                    {isPasswordFocused && !isPasswordValid && (
+                        <div className="mt-2 pl-1 space-y-1">
+                            <p className={`text-xs flex items-center ${validations.isLongEnough ? 'text-green-600' : 'text-red-500'}`}>
+                                <span className="mr-2">{validations.isLongEnough ? <MdDoneAll className='text-base' /> : <FaRegRectangleXmark className='text-base text-red-400' /> }</span> At least 6 characters
+                            </p>
+                            <p className={`text-xs flex items-center ${validations.hasLower ? 'text-green-600' : 'text-red-500'}`}>
+                                <span className="mr-2">{validations.hasLower ? <MdDoneAll className='text-base' /> : <FaRegRectangleXmark className='text-base text-red-400' />}</span> One lowercase letter
+                            </p>
+                            <p className={`text-xs flex items-center ${validations.hasUpper ? 'text-green-600' : 'text-red-500'}`}>
+                                <span className="mr-2">{validations.hasUpper ? <MdDoneAll className='text-base' /> : <FaRegRectangleXmark className='text-base text-red-400' /> }</span> One uppercase letter
+                            </p>
+                            <p className={`text-xs flex items-center ${validations.hasNumber ? 'text-green-600' : 'text-red-500'}`}>
+                                <span className="mr-2">{validations.hasNumber ? <MdDoneAll className='text-base' /> : <FaRegRectangleXmark className='text-base text-red-400' /> }</span> One number
+                            </p>
+                        </div>
+                    )}
+                </div>
                   
                    {/* Confirm Password Input */}
                   <div>
@@ -194,7 +229,7 @@ const SignUp = () => {
 
               {/* Google Sign-Up Button */}
               <div>
-                <button type="button" className="flex w-full cursor-pointer items-center justify-center gap-3 rounded-lg border border-slate-300 bg-white py-3 px-4 text-center font-semibold text-slate-800 shadow-sm hover:bg-slate-50 transition-all">
+                <button onClick={handleGoogleSignIn} type="button" className="flex w-full cursor-pointer items-center justify-center gap-3 rounded-lg border border-slate-300 bg-white py-3 px-4 text-center font-semibold text-slate-800 shadow-sm hover:bg-slate-50 transition-all">
                   <svg className="h-6 w-6" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clipPath="url(#clip0_17_80)">
                       <path d="M47.532 24.552c0-1.566-.14-3.084-.405-4.548h-23.01v8.59h13.01c-.563 2.76-2.156 5.17-4.64 6.813v5.56h7.15c4.188-3.858 6.59-9.522 6.59-16.415z" fill="#4285F4"/>
