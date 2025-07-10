@@ -64,10 +64,10 @@ const campData = [
   },
 ];
 
-const PopularCamps = () => {
+const AvailableCamps = () => {
   return (
-      <div>
-          <div className="text-center py-26 pb-8">
+      <div className="mb-32">
+          <div className="text-center pt-12 pb-8">
               <h1 className="poppins text-4xl font-bold">Popular Medical Camps</h1>
           </div>
         <div className="w-11/12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mx-auto p-8 ">
@@ -127,12 +127,9 @@ const PopularCamps = () => {
             </div>
             </div>
         ))}
-        </div> 
-        <div className="mb-32 flex items-center justify-center p-8">
-            <Link to='/AvailableCamps' className="text-2xl poppins text-white bg-[#1e74d2] hover:to-blue-500 rounded-md py-2 px-5 ">See All</Link>            
-        </div>         
+        </div>          
     </div>
   );
 };
 
-export default PopularCamps;
+export default AvailableCamps;

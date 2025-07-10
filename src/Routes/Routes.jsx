@@ -5,6 +5,10 @@ import CampDetails from "../pages/CampDetails/CampDetails";
 import SignIn from "../pages/SignIn/SignIn";
 import SignUp from "../pages/SignUp/SignUp";
 import PrivateRoute from "../hooks/PrivateRoute/PrivateRoute";
+import AvailableCamps from "../pages/AvailableCamps/AvailableCamps";
+import Dashboard from "../layouts/Dashboard";
+import Overview from "../pages/Overview/Overview";
+import OrganizerProfile from "../pages/OrganizerProfile/OrganizerProfile";
 
 export const router = createBrowserRouter([
   {
@@ -14,6 +18,10 @@ export const router = createBrowserRouter([
         {
             index: true,
             Component: Home
+        },
+        {
+          path: '/AvailableCamps',
+          Component: AvailableCamps
         },
         {
           path: '/CampDetails/:id',
@@ -29,4 +37,18 @@ export const router = createBrowserRouter([
         }
     ]
   },
+  {
+    path: '/Dashboard',
+    element: <PrivateRoute><Dashboard/></PrivateRoute>,
+    children: [
+      {
+        index: true,
+        element: <PrivateRoute><Overview/></PrivateRoute>
+      },
+      {
+        path: '/Dashboard/OrganizerProfile',
+        element: <PrivateRoute><OrganizerProfile/></PrivateRoute>
+      }
+    ]
+  }
 ]);

@@ -33,7 +33,7 @@ const Navbar = () => {
 
     const links = <>
         <NavLink to='/'>Home</NavLink>
-        <NavLink>Available Camps</NavLink>
+        <NavLink to='/AvailableCamps'>Available Camps</NavLink>
         {/* <NavLink></NavLink>
         <NavLink></NavLink> */}
     </>
@@ -91,7 +91,7 @@ const Navbar = () => {
                 </li>
                 <hr />
                 <li>
-                  <Link to="/dashboard" className="text-base">Dashboard</Link>
+                  <Link to="/Dashboard" className="text-base">Dashboard</Link>
                 </li>
                 <li>
                   <button onClick={handleSignOut} className="text-base hover:bg-red-50 text-red-300">Signout</button>
