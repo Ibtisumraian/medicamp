@@ -49,7 +49,7 @@ const Dashboard = () => {
         <>
             <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard" ><MdOutlineDashboard size={22} /> Overview</Link>
             <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/OrganizerProfile" ><MdOutlinePerson size={22} />Profile</Link>
-            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/add-camp" ><MdOutlineAddLocation size={22} />Add a Camp</Link>
+            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/AddACamp" ><MdOutlineAddLocation size={22} />Add a Camp</Link>
             <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/manage-camps" ><MdOutlineSettings size={22} />Manage Camps</Link>
             <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/manage-registrations" ><BsCheck2Square size={22} />Manage Registrations</Link>
         </>
