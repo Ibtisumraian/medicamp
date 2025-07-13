@@ -3,6 +3,10 @@ import { useForm } from 'react-hook-form';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import { FiPlusCircle } from 'react-icons/fi';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../hooks/useAxiosSecure/useAxiosSecure';
+
+
+
 
 const uploadToCloudinary = async (file) => {
   const formData = new FormData();
@@ -26,6 +30,7 @@ const uploadToCloudinary = async (file) => {
 };
 
 const AddACamp = () => {
+  const axiosSecure = useAxiosSecure ()
   const {
     register,
     handleSubmit,
@@ -53,7 +58,7 @@ const AddACamp = () => {
       return;
     }
 
-    const [mm, dd, yy] = data.date
+    const [yy, mm, dd] = data.date.split('-')
     const splitDate = `${dd}-${mm}-${yy}` 
 
     try {
@@ -64,7 +69,7 @@ const AddACamp = () => {
         fees: parseInt(data.campFees),
         date: splitDate,
         time: data.time,
-        sortingTime: new Date().toISOString(data.time),
+        sortingTime: new Date(`${data.date}T${data.time}`).toISOString(),
         location: data.location,
         professionalName: data.healthcareProfessionalName,
         participantCount: parseInt(data.participantCount),
@@ -82,26 +87,28 @@ const AddACamp = () => {
         ).toLowerCase(),
       };
 
-      console.log('Data ready for database:', campData);
-      Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Camp added successfully !",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-      reset();
-    } catch (error) {
-      console.error('Submission failed:', error);
-      alert('.');
-      Swal.fire({
-                    icon: "error",
-                    confirmButtonColor: "#00A79D",
-                    title: "Oops...",
-                    text: "Error: Could not add the camp!",
-                });
-    } finally {
-      setIsSubmitting(false);
+        const res = await axiosSecure.post('/camps', campData);
+        if (res.data.insertedId) {
+          console.log('Data ready for database:', campData);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Camp added successfully!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          reset();
+        }
+      } catch (error) {
+        console.error('Submission failed:', error);
+        Swal.fire({
+          icon: "error",
+          confirmButtonColor: "#00A79D",
+          title: "Oops...",
+          text: "Error: Could not add the camp!",
+        });
+      } finally {
+        setIsSubmitting(false);
     }
   };
 

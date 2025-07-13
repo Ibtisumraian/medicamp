@@ -4,12 +4,25 @@ import { FaRegRectangleXmark } from 'react-icons/fa6';
 import { Link, useNavigate } from 'react-router';
 import useAuth from '../../hooks/useAuth/useAuth';
 import { Bounce, toast } from 'react-toastify';
+import { updateProfile } from 'firebase/auth';
+import useAxiosSecure from '../../hooks/useAxiosSecure/useAxiosSecure';
 
 const SignUp = () => {
-        const { userSignInWithGoogle } = useAuth()
+        const { userSignInWithGoogle, userSignUpWithEmailPass } = useAuth()
         const [password, setPassword] = useState('');
+        const [confirmPassword, setConfirmPassword] = useState('');
+        const [passwordError, setPasswordError] = useState('');
         const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+        const axiosSecure = useAxiosSecure()
         const navigate = useNavigate()
+        
+        useEffect(() => {
+          if (confirmPassword && password !== confirmPassword) {
+            setPasswordError('Passwords do not match!');
+          } else {
+            setPasswordError('');
+          }
+        }, [password, confirmPassword]);
 
         const [validations, setValidations] = useState({
             hasLower: false,
@@ -30,11 +43,80 @@ const SignUp = () => {
         const handlePasswordFocus = () => setIsPasswordFocused(true);
         const handlePasswordBlur = () => setIsPasswordFocused(false);        
         const isPasswordValid = Object.values(validations).every(Boolean);
-        
+    
+    const handleCreateAccount = (e) => {      
+        e.preventDefault();
+
+        const name = e.target.name.value;
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+
+        userSignUpWithEmailPass(email, password)
+          .then(async (result) => {
+            await updateProfile(result.user, { displayName: name });
+
+            const userData = {
+              email,
+              role: 'user',
+              cover_image: ''
+            };
+
+            axiosSecure.post('/users', userData)
+              .then(res => {
+                console.log('User synced to DB:', res.data);
+              })
+              .catch(err => {
+                console.error('DB sync error:', err);
+              });
+
+            toast.success('Signed up successfully!', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              transition: Bounce,
+            });
+
+            navigate(location?.state || '/');
+          })
+          .catch(error => {
+            toast.error('Something went wrong while signing up. Please try again!', {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              transition: Bounce,
+            });
+          });
+      };
     
     const handleGoogleSignIn = () => {
         userSignInWithGoogle()
-        .then(()=>{
+        .then((result)=>{
+          
+          const email = result.user.email;
+
+          const userData = {
+            email,
+            role: 'user',
+            cover_image: '',
+          };
+
+          axiosSecure.post('/users', userData)
+            .then((res) => {
+              console.log('User synced to DB:', res.data);
+            })
+            .catch((err) => {
+              console.error('DB sync error:', err);
+            });
             toast.success('Signed in successfully!', {
                 position: "top-right",
                 autoClose: 5000,
@@ -93,7 +175,7 @@ const SignUp = () => {
               <h2 className="text-3xl font-bold text-slate-800 mb-2">Create an Account</h2>
               <p className="text-slate-600 mb-8">It's free and only takes a minute.</p>
 
-              <form action="#" method="POST">
+              <form onSubmit={handleCreateAccount}>
                 <div className="space-y-5">
                   
                   {/* Full Name Input */}
@@ -109,7 +191,7 @@ const SignUp = () => {
                       </div>
                       <input
                         type="text"
-                        name="full-name"
+                        name="name"
                         id="full-name"
                         className="block w-full rounded-lg border-slate-300 pl-10 py-3 focus:border-[#1e74d2] focus:ring-[#1e74d2]"
                         placeholder="Your full name"
@@ -199,16 +281,21 @@ const SignUp = () => {
                         type="password"
                         name="confirm-password"
                         id="confirm-password"
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                         className="block w-full rounded-lg border-slate-300 pl-10 py-3 focus:border-[#1e74d2] focus:ring-[#1e74d2]"
                         placeholder="Confirm your password"
                       />
                     </div>
+                    {passwordError && (
+                      <p className="text-red-500 text-sm mt-1 pl-1">{passwordError}</p>
+                    )}
                   </div>
 
                   {/* Submit Button */}
                   <div>
                     <button
-                      type="submit"
+                      type='submit'
+                      disabled={passwordError !== ''}
                       className="flex w-full justify-center cursor-pointer rounded-lg bg-[#1e74d2] py-3 px-4 text-lg font-semibold text-white shadow-sm hover:bg-[#185dab] focus:outline-none focus:ring-2 focus:ring-[#1e74d2] focus:ring-offset-2 transition-all duration-300 transform hover:scale-105"
                     >
                       Create Account

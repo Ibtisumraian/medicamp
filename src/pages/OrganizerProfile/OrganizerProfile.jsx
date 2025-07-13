@@ -108,7 +108,7 @@ const OrganizerProfile = () => {
                 <img src={profileData.coverPhoto} alt="Cover" className="w-full h-88 object-cover" />
                 <div className="relative p-6 bg-transparent -mt-16 flex flex-col sm:flex-row items-center gap-6">
                     <div className="relative flex-shrink-0">
-                        <img src={user.photoURL || 'https://i.ibb.co/YTsRKgQ/default-avatar.png'} alt="Profile" className="h-28 w-28 rounded-full object-cover border-4 border-white shadow-lg" />
+                        <img src={user.photoURL || 'https://res.cloudinary.com/dv6p7mprd/image/upload/v1752430406/istockphoto-1477583621-612x612_x1gcca.jpg'} alt="Profile" className="h-28 w-28 rounded-full object-cover border-4 border-white shadow-lg" />
                     </div>
                     <div className="text-center sm:text-left mt-4 sm:mt-10">
                         <h1 className="text-3xl font-bold text-slate-800">{user.displayName || 'Organizer Name'}</h1>

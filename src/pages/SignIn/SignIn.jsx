@@ -3,21 +3,86 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router';
 import useAuth from '../../hooks/useAuth/useAuth';
 import { Bounce, toast } from 'react-toastify';
+import useAxiosSecure from '../../hooks/useAxiosSecure/useAxiosSecure';
 
 const SignIn = () => {
-    const { userSignInWithGoogle } = useAuth()
+    const { userSignInWithGoogle, userSignInWithEmailPass } = useAuth()
     const navigate = useNavigate()
+    const axiosSecure = useAxiosSecure();
 
     const handleSignIn = (e) => {
-        e.preventDefault()
-        const email = e.target.email.value
-        const password = e.target.password.value
-        console.log(email, password);
-    }
+      e.preventDefault();
+      const email = e.target.email.value;
+      const password = e.target.password.value;
+
+      
+
+      userSignInWithEmailPass(email, password)
+        .then(() => {
+          // Step 1: Add user data to the DB
+          const userData = {
+            email,
+            role: 'user',
+            cover_image: ''
+          };
+
+          axiosSecure.post('/users', userData)
+            .then(res => {
+              console.log('User synced to DB:', res.data);
+            })
+            .catch(err => {
+              console.error('DB sync error:', err);
+            });
+
+          // Step 2: Toast & Navigate
+          toast.success('Signed in successfully!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce,
+          });
+
+          navigate(location?.state || '/');
+        })
+        .catch(error => {
+          toast.error('Invalid email or password!!', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce,
+          });
+        });
+    };
+
 
     const handleGoogleSignIn = () => {
         userSignInWithGoogle()
-        .then(()=>{
+        .then((result)=>{
+            const email = result.user.email;
+
+            const userData = {
+              email,
+              role: 'user',
+              cover_image: '',
+            };
+            axiosSecure.post('/users', userData)
+              .then((res) => {
+                console.log('User synced to DB:', res.data);
+              })
+              .catch((err) => {
+                console.error('DB sync error:', err);
+              });
+          
             toast.success('Signed in successfully!', {
                 position: "top-right",
                 autoClose: 5000,

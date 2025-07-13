@@ -79,7 +79,7 @@ const Navbar = () => {
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                 <div className="w-12 rounded-full border-3 border-[#1e74d2]">
-                  <img src={user.photoURL || ' '} />
+                  <img src={user.photoURL || 'https://res.cloudinary.com/dv6p7mprd/image/upload/v1752430406/istockphoto-1477583621-612x612_x1gcca.jpg'} />
                 </div>
               </div>
               <ul
@@ -94,7 +94,7 @@ const Navbar = () => {
                   <Link to="/Dashboard" className="text-base">Dashboard</Link>
                 </li>
                 <li>
-                  <button onClick={handleSignOut} className="text-base hover:bg-red-50 text-red-300">Signout</button>
+                  <button onClick={handleSignOut} className="text-base hover:bg-red-50 text-red-300">Sign Out</button>
                 </li>
               </ul>
             </div>
