@@ -77,7 +77,7 @@ const AddACamp = () => {
         searchKeyWords: (
           data.campName +
           ' ' +
-          data.date +
+          splitDate +
           ' ' +
           data.location +
           ' ' +

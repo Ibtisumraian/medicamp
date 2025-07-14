@@ -94,7 +94,7 @@ const Overview = () => {
             <div>
                 <h3 className="text-xl font-bold text-slate-800 mb-4">Quick Actions</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <Link to="/dashboard/add-camp" className="group bg-white p-6 rounded-2xl shadow-md border border-slate-200/80 flex items-center justify-between transition-all hover:border-[#1e74d2] hover:shadow-lg">
+                    <Link to="/dashboard/AddACamp" className="group bg-white p-6 rounded-2xl shadow-md border border-slate-200/80 flex items-center justify-between transition-all hover:border-[#1e74d2] hover:shadow-lg">
                         <div className="flex items-center gap-4">
                             <div className="bg-[#e5f2fa] p-3 rounded-full">
                                 <PlusCircle className="w-6 h-6 text-[#1e74d2]" />

@@ -1,19 +1,25 @@
 import React from 'react';
-// Corrected import for modern react-router-dom (v6+)
 import { Link, useNavigate } from 'react-router';
 import useAuth from '../../hooks/useAuth/useAuth';
 import { Bounce, toast } from 'react-toastify';
 import useAxiosSecure from '../../hooks/useAxiosSecure/useAxiosSecure';
+import { useForm } from 'react-hook-form';
 
 const SignIn = () => {
     const { userSignInWithGoogle, userSignInWithEmailPass } = useAuth()
     const navigate = useNavigate()
     const axiosSecure = useAxiosSecure();
+    
+     const {
+      register,
+      handleSubmit,
+      formState: { errors },
+    } = useForm();
 
-    const handleSignIn = (e) => {
-      e.preventDefault();
-      const email = e.target.email.value;
-      const password = e.target.password.value;
+    const onSubmit = ({ email, password }) => {
+      // e.preventDefault();
+      // const email = e.target.email.value;
+      // const password = e.target.password.value;
 
       
 
@@ -140,7 +146,7 @@ const SignIn = () => {
               <h2 className="text-3xl font-bold text-slate-800 mb-2">Welcome Back</h2>
               <p className="text-slate-600 mb-8">Please enter your details to sign in.</p>
 
-              <form onSubmit={handleSignIn}>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="space-y-6">
                   
                   {/* Email Input */}
@@ -159,11 +165,13 @@ const SignIn = () => {
                         type="email"
                         name="email"
                         id="email"
-                        required
+                        
+                        {...register("email", { required: "Email is required" })}
                         className="block w-full rounded-lg border-slate-300 pl-10 py-3 focus:border-[#1e74d2] focus:ring-[#1e74d2]"
                         placeholder="you@example.com"
                       />
                     </div>
+                     {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email.message}</p>}
                   </div>
 
                   {/* Password Input */}
@@ -181,11 +189,13 @@ const SignIn = () => {
                         type="password"
                         name="password"
                         id="password"
-                        required
+                        
+                         {...register("password", { required: "Password is required" })}
                         className="block w-full rounded-lg border-slate-300 pl-10 py-3 focus:border-[#1e74d2] focus:ring-[#1e74d2]"
                         placeholder="••••••••"
                       />
                     </div>
+                     {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password.message}</p>}
                   </div>
 
                   {/* Remember Me + Forgot Password */}
