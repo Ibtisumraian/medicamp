@@ -65,7 +65,7 @@ const AvailableCamps = () => {
   if (isError) return <div className="text-center text-red-500 my-20 font-semibold text-lg">Error: {error.message}</div>;
 
   return (
-    <div className="bg-slate-50 min-h-screen">
+    <div className="bg-slate-50 min-h-screen pb-32">
       {/* --- Hero Section --- */}
       <div className="bg-gradient-to-br from-[#e5f2fa] to-[#a7d4f9] text-center py-20 px-4">
         <h1 className="poppins text-5xl font-extrabold poppins text-gray-700">Available Medical Camps</h1>
