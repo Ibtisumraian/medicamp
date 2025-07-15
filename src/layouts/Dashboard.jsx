@@ -1,58 +1,70 @@
-import React from 'react';
+import React from 'react'; 
 import { signOut } from 'firebase/auth';
 import { Link, NavLink, Outlet } from 'react-router';
 import { toast, Bounce, ToastContainer } from 'react-toastify';
+import { useQuery } from '@tanstack/react-query'; 
 import { auth } from '../components/firebase/firebase.init';
 import { GoHome, GoSignOut } from 'react-icons/go';
-import { MdOutlineDashboard, MdOutlinePerson,MdOutlineAddLocation,MdOutlineSettings} from 'react-icons/md';
-import { RiFileList3Line } from 'react-icons/ri';
-import { BsCheck2Square } from "react-icons/bs";
-
-    // const NavItem = ({ to, icon, children }) => (
-    //     <NavLink
-    //         to={to}
-    //         className={({ isActive }) => 
-    //             `flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 ease-in-out font-semibold text-slate-700 hover:bg-white/50 ` +
-    //             (isActive ? 'bg-white text-[#1e74d2] shadow-md' : 'hover:text-[#1e74d2]')
-    //         }
-    //     >
-    //         {icon}
-    //         <span>{children}</span>
-    //     </NavLink>
-    // );
-
+import { MdOutlineDashboard, MdOutlinePerson, MdOutlineAddLocation, MdOutlineSettings } from 'react-icons/md';
+import { BsCheck2Square } from 'react-icons/bs';
+import useAxiosSecure from '../hooks/useAxiosSecure/useAxiosSecure';
+import useAuth from '../hooks/useAuth/useAuth';
 
 const Dashboard = () => {
+    const { user } = useAuth();
+    const axiosSecure = useAxiosSecure();
+
+    const { data: userData, isLoading: isRoleLoading } = useQuery({
+        queryKey: ['userRole', user?.email],
+        queryFn: async () => {
+            if (!user?.email) return null;
+            const res = await axiosSecure.get(`/users/${user.email}`);
+            return res.data[0];
+        },
+        enabled: !!user?.email,
+    });
+console.log(userData);
 
     const handleSignOut = () => {
         signOut(auth)
             .then(() => {
                 toast.success('Sign Out Successful!', {
-                    position: 'top-right',
-                    autoClose: 3000,
-                    theme: 'light',
-                    transition: Bounce,
+                    position: 'top-right', autoClose: 3000, theme: 'light', transition: Bounce,
                 });
             })
             .catch((error) => {
                 console.error(error);
                 toast.error('Sign Out Failed.', {
-                    position: 'top-right',
-                    autoClose: 3000,
-                    theme: 'light',
-                    transition: Bounce,
+                    position: 'top-right', autoClose: 3000, theme: 'light', transition: Bounce,
                 });
             });
     };
 
-    const sidebarLinks = (
+    const adminSidebarLinks = (
         <>
-            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard" ><MdOutlineDashboard size={22} /> Overview</Link>
-            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/OrganizerProfile" ><MdOutlinePerson size={22} />Profile</Link>
-            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/AddACamp" ><MdOutlineAddLocation size={22} />Add a Camp</Link>
-            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/ManageCamps" ><MdOutlineSettings size={22} />Manage Camps</Link>
-            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/manage-registrations" ><BsCheck2Square size={22} />Manage Registrations</Link>
+            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard"><MdOutlineDashboard size={22} /> Overview</Link>
+            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/OrganizerProfile"><MdOutlinePerson size={22} />Profile</Link>
+            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/AddACamp"><MdOutlineAddLocation size={22} />Add a Camp</Link>
+            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/ManageCamps"><MdOutlineSettings size={22} />Manage Camps</Link>
+            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/manage-registrations"><BsCheck2Square size={22} />Manage Registrations</Link>
         </>
+    );
+
+    const userSidebarLinks = (
+        <>
+            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard"><MdOutlineDashboard size={22} /> Analytics</Link>
+            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/OrganizerProfile"><MdOutlinePerson size={22} />Participant Profile</Link>
+            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/"><MdOutlineAddLocation size={22} />Registered Camps</Link>
+            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/"><MdOutlineSettings size={22} />Payment History</Link>
+        </>
+    );
+
+    const SidebarSkeleton = () => (
+        <div className="flex flex-col gap-4">
+            {[...Array(4)].map((_, i) => (
+                <div key={i} className="h-8 bg-slate-300 rounded-lg animate-pulse"></div>
+            ))}
+        </div>
     );
 
     return (
@@ -68,15 +80,17 @@ const Dashboard = () => {
                 </div>
 
                 <nav className="flex-1 flex flex-col gap-3 text-gray-600">
-                    {sidebarLinks}
+                    {isRoleLoading || !userData ? (
+                        <SidebarSkeleton />
+                        ) : userData.role.toLowerCase() === 'admin' ? adminSidebarLinks : userSidebarLinks}
                 </nav>
 
                 <div className="pt-4 mt-4 border-t border-gray-400">
-                    <Link className='flex items-center gap-2 text-gray-600'  to="/"><GoHome size={22} />Back to Home</Link>
+                    <Link className='flex items-center gap-2 text-gray-600' to="/"><GoHome size={22} />Back to Home</Link>
                     <button
                         onClick={handleSignOut}
                         className="flex items-center gap-4 w-full mt-2 py-3 rounded-xl text-red-400 font-semibold transition-all duration-300 hover:bg-red-100"
-                    >
+                    > 
                         <GoSignOut size={22} />
                         <span>Logout</span>
                     </button>
@@ -97,7 +111,6 @@ const Dashboard = () => {
                             </div>
                             <div className="flex-1 px-2 mx-2 font-bold">MediCamp Dashboard</div>
                         </div>
-                        {/* Page content will be rendered here */}
                         <div className="p-4 sm:p-6  min-h-screen">
                            <Outlet />
                         </div>
@@ -107,7 +120,9 @@ const Dashboard = () => {
                         <div className="menu p-4 w-72 min-h-full bg-white flex flex-col">
                             <h1 className="text-xl font-bold text-slate-800 p-4 mb-4">MediCamp</h1>
                             <nav className="flex-1 flex flex-col gap-2 text-gray-600">
-                                {sidebarLinks}
+                                {isRoleLoading || !userData ? (
+                                    <SidebarSkeleton />
+                                    ) : userData.role.toLowerCase() === 'admin' ? adminSidebarLinks : userSidebarLinks}
                             </nav>
                             <div className="pt-4 mt-4 border-t border-slate-200">
                                 <Link className='flex items-center gap-2 text-gray-600' to="/"><GoHome size={22} />Back to Home</Link>

@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ChevronDown, ChevronUp, Search, FilePenLine, Trash2, ShieldAlert } from 'lucide-react';
 import useAxiosSecure from '../../hooks/useAxiosSecure/useAxiosSecure';
 import { useNavigate } from 'react-router';
+import Swal from 'sweetalert2';
 
 const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm, campName }) => {
   if (!isOpen) return null;
@@ -59,7 +60,7 @@ const ManageCamps = () => {
 
   const deleteCampMutation = useMutation({
     mutationFn: (campId) => {
-      return axiosSecure.delete(`/camps/${campId}`);
+      return axiosSecure.delete(`/delete-camp/${campId}`);
     },
     onSuccess: () => {
 
@@ -68,7 +69,13 @@ const ManageCamps = () => {
 
 
       queryClient.invalidateQueries({ queryKey: ['camps'] });
-      alert('Camp deleted successfully!');
+      Swal.fire({
+                icon: 'success',
+                title: 'Deleted!',
+                text: 'Camp Delete successfully.',
+                timer: 2000,
+                showConfirmButton: false,
+              });
     },
     onError: (err) => {
         console.error("Deletion failed:", err);

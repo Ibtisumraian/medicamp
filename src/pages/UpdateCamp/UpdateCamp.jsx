@@ -5,6 +5,7 @@ import { FaCloudUploadAlt } from 'react-icons/fa';
 import { FiRefreshCw } from 'react-icons/fi';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../hooks/useAxiosSecure/useAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
 
 
 const uploadToCloudinary = async (file) => {
@@ -38,42 +39,38 @@ console.log(id);
   } = useForm();
 
   const selectedImage = watch('image');
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [camp, setCamp] = useState(null);
+  // const [camp, setCamp] = useState(null);
 
   // Fetch the existing camp data
-  useEffect(() => {
-    const fetchCamp = async () => {
-      try {
-        const res = await axiosSecure.get(`/camps/${id}`);
-        const data = res.data;
+  const { data: camp, isLoading } = useQuery({
+    queryKey: ['camp', id],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/camps/${id}`);
+      const data = res.data;
 
-        const [dd, mm, yy] = data.date.split('-');
-        const formattedDate = `${yy}-${mm}-${dd}`;
+      // Format date for form input
+      const [dd, mm, yy] = data.date.split('-');
+      const formattedDate = `${yy}-${mm}-${dd}`;
 
-        reset({
-          campName: data.name,
-          campFees: data.fees,
-          date: formattedDate,
-          time: data.time,
-          location: data.location,
-          healthcareProfessionalName: data.professionalName,
-          participantCount: data.participantCount,
-          description: data.description,
-        });
+      // Prefill form
+      reset({
+        campName: data.name,
+        campFees: data.fees,
+        date: formattedDate,
+        time: data.time,
+        location: data.location,
+        healthcareProfessionalName: data.professionalName,
+        participantCount: data.participantCount,
+        description: data.description,
+      });
 
-        setCamp(data);
-      } catch (error) {
-        console.error('Error fetching camp:', error);
-        Swal.fire('Error', 'Failed to load camp info.', 'error');
-      } finally {
-        setLoading(false);
-      }
-    };
+      return data;
+    },
+    enabled: !!id, 
+  });
 
-    fetchCamp();
-  }, [id, ]);
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
@@ -138,7 +135,7 @@ console.log(id);
     }
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <span className="loading loading-spinner loading-lg text-blue-600"></span>
@@ -157,7 +154,7 @@ console.log(id);
           {/* Camp Name */}
           <div>
             <label className="block font-semibold mb-1">Camp Name</label>
-            <input type="text" {...register('campName', { required: true })} className="input input-bordered w-full" />
+            <input type="text" defaultValue={camp.name} {...register('campName', { required: true })} className="input input-bordered w-full" />
             {errors.campName && <p className="text-sm text-red-500 mt-1">Camp name is required.</p>}
           </div>
 
@@ -165,17 +162,17 @@ console.log(id);
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label className="block font-semibold mb-1">Fees ($)</label>
-              <input type="number" {...register('campFees', { required: true })} className="input input-bordered w-full" />
+              <input type="number" defaultValue={camp.fees} {...register('campFees', { required: true })} className="input input-bordered w-full" />
               {errors.campFees && <p className="text-sm text-red-500 mt-1">Fees required</p>}
             </div>
             <div>
               <label className="block font-semibold mb-1">Date</label>
-              <input type="date" {...register('date', { required: true })} className="input input-bordered w-full" />
+              <input type="date" defaultValue={camp.date} {...register('date', { required: true })} className="input input-bordered w-full" />
               {errors.date && <p className="text-sm text-red-500 mt-1">Date required</p>}
             </div>
             <div>
               <label className="block font-semibold mb-1">Time</label>
-              <input type="time" {...register('time', { required: true })} className="input input-bordered w-full" />
+              <input type="time" defaultValue={camp.time} {...register('time', { required: true })} className="input input-bordered w-full" />
               {errors.time && <p className="text-sm text-red-500 mt-1">Time required</p>}
             </div>
           </div>
@@ -183,21 +180,21 @@ console.log(id);
           {/* Location */}
           <div>
             <label className="block font-semibold mb-1">Location</label>
-            <input type="text" {...register('location', { required: true })} className="input input-bordered w-full" />
+            <input type="text" defaultValue={camp.location} {...register('location', { required: true })} className="input input-bordered w-full" />
             {errors.location && <p className="text-sm text-red-500 mt-1">Location required</p>}
           </div>
 
           {/* Professional Name */}
           <div>
             <label className="block font-semibold mb-1">Professional Name</label>
-            <input type="text" {...register('healthcareProfessionalName', { required: true })} className="input input-bordered w-full" />
+            <input type="text" defaultValue={camp.professionalName} {...register('healthcareProfessionalName', { required: true })} className="input input-bordered w-full" />
             {errors.healthcareProfessionalName && <p className="text-sm text-red-500 mt-1">Required</p>}
           </div>
 
           {/* Description */}
           <div>
             <label className="block font-semibold mb-1">Description</label>
-            <textarea rows="5" {...register('description', { required: true })} className="textarea textarea-bordered w-full"></textarea>
+            <textarea rows="5" defaultValue={camp.description} {...register('description', { required: true })} className="textarea textarea-bordered w-full"></textarea>
             {errors.description && <p className="text-sm text-red-500 mt-1">Description is required</p>}
           </div>
         </div>
