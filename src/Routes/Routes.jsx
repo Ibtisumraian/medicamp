@@ -12,6 +12,8 @@ import OrganizerProfile from "../pages/OrganizerProfile/OrganizerProfile";
 import AddACamp from "../pages/AddACamp/AddACamp";
 import ManageCamps from "../pages/ManageCamps/ManageCamps";
 import UpdateCamp from "../pages/UpdateCamp/UpdateCamp";
+import RegisteredCamps from "../pages/RegisteredCamps/RegisteredCamps";
+import PayForRegistration from "../pages/PayForRegistration/PayForRegistration";
 
 export const router = createBrowserRouter([
   {
@@ -63,7 +65,27 @@ export const router = createBrowserRouter([
       {
         path: '/Dashboard/UpdateCamp/:id',
         element: <PrivateRoute><UpdateCamp/></PrivateRoute>
-      }
+      },
+      {
+        path: '/Dashboard/RegisteredCamps',
+        element: <PrivateRoute><RegisteredCamps/></PrivateRoute>
+      },
+      // {
+      //   path: '/Dashboard/AddACamp',
+      //   element: <PrivateRoute><AddACamp/></PrivateRoute>
+      // },
+      // {
+      //   path: '/Dashboard/ManageCamps',
+      //   element: <PrivateRoute><ManageCamps/></PrivateRoute>
+      // },
+      // {
+      //   path: '/Dashboard/UpdateCamp/:id',
+      //   element: <PrivateRoute><UpdateCamp/></PrivateRoute>
+      // }
     ]
+  },
+  {
+    path: '/PayForRegistration',
+    element:<PrivateRoute><PayForRegistration/></PrivateRoute>
   }
 ]);

@@ -167,7 +167,7 @@ console.log(id);
             </div>
             <div>
               <label className="block font-semibold mb-1">Date</label>
-              <input type="date" defaultValue={camp.date} {...register('date', { required: true })} className="input input-bordered w-full" />
+              <input type="date" {...register('date', { required: true })} className="input input-bordered w-full" />
               {errors.date && <p className="text-sm text-red-500 mt-1">Date required</p>}
             </div>
             <div>

@@ -99,7 +99,7 @@ const AddACamp = () => {
           });
           reset();
         }
-      } catch (error) {
+      }catch (error) {
         console.error('Submission failed:', error);
         Swal.fire({
           icon: "error",

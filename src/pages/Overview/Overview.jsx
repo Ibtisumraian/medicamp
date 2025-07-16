@@ -19,12 +19,12 @@ const chartData = [
   { month: 'Jul', registrations: 110 },
 ];
 
-const stats = [
-  { name: 'Total Camps', value: '12' },
-  { name: 'Total Registrations', value: '1,845' },
-  { name: 'Upcoming Camps', value: '3' },
-  { name: 'Avg. Participants', value: '153' },
-];
+// const stats = [
+//   { name: 'Total Camps', value: '12' },
+//   { name: 'Total Registrations', value: '1,845' },
+//   { name: 'Upcoming Camps', value: '3' },
+//   { name: 'Avg. Participants', value: '153' },
+// ];
 
 const recentActivity = [
   { id: 1, type: 'New Registration', text: 'Rahim Sheikh registered for "Dental Care Camp".', time: '2 hours ago' },
@@ -37,17 +37,25 @@ const Overview = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  // Fetch user role using TanStack Query
   const { data: userData, isPending, isError } = useQuery({
     queryKey: ['userRole', user?.email],
-    enabled: !!user?.email, // only run if email is available
+    enabled: !!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/${user.email}`);
-      return res.data[0]; // assuming it's an array with one user object
+      return res.data[0]; 
     }
   });
 
-  if (isPending) {
+ // Fetch all camps
+  const { data: allCamps = [], isLoading: campsLoading, isError: campsError } = useQuery({
+    queryKey: ['allCamps'],
+    queryFn: async () => {
+      const res = await axiosSecure.get('/camps');
+      return res.data;
+    }
+  });
+
+  if (isPending || campsLoading) {
     return (
       <div className="h-screen flex justify-center items-center text-lg font-medium text-gray-600">
         Loading overview...
@@ -55,16 +63,27 @@ const Overview = () => {
     );
   }
 
-  if (isError || !userData?.role) {
+  if (isError || !userData?.role || campsError) {
     return (
       <div className="h-screen flex justify-center items-center text-red-500">
-        Failed to load user role.
+        Failed to load overview data.
       </div>
     );
   }
 
   const role = userData.role;
-  console.log(role);
+
+  // Stats Calculation from allCamps
+  const totalCamps = allCamps.length;
+  const totalParticipants = allCamps.reduce((sum, camp) => sum + (camp.participantCount || 0), 0);
+  const upcomingCamps = allCamps.filter(camp => {
+    const [dd, mm, yyyy] = camp.date.split('-');
+    const campDate = new Date(`${yyyy}-${mm}-${dd}`);
+    return campDate > new Date();
+  }).length;
+  const avgParticipants = totalCamps ? Math.round(totalParticipants / totalCamps) : 0;
+
+
   
 
   return (
@@ -78,14 +97,32 @@ const Overview = () => {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {stats.map((stat) => (
-              <div key={stat.name} className="bg-white p-6 rounded-2xl shadow-md border border-slate-200/80">
+            
+              <div  className="bg-white p-6 rounded-2xl shadow-md border border-slate-200/80">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-semibold text-slate-500">{stat.name}</p>
+                  <p className="text-sm font-semibold text-slate-500">Total Camps</p>
                 </div>
-                <p className="text-4xl font-bold text-slate-800 mt-2">{stat.value}</p>
+                <p className="text-4xl font-bold text-slate-800 mt-2">{allCamps.length}</p>
               </div>
-            ))}
+              <div  className="bg-white p-6 rounded-2xl shadow-md border border-slate-200/80">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-semibold text-slate-500">Total Registrations</p>
+                </div>
+                <p className="text-4xl font-bold text-slate-800 mt-2">{totalParticipants}</p>
+              </div>
+              <div  className="bg-white p-6 rounded-2xl shadow-md border border-slate-200/80">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-semibold text-slate-500">Upcoming Camps</p>
+                </div>
+                <p className="text-4xl font-bold text-slate-800 mt-2">{upcomingCamps}</p>
+              </div>
+              <div  className="bg-white p-6 rounded-2xl shadow-md border border-slate-200/80">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-semibold text-slate-500">Avg. Participants</p>
+                </div>
+                <p className="text-4xl font-bold text-slate-800 mt-2">{avgParticipants}</p>
+              </div>
+            
           </div>
 
           {/* Chart and Recent Activity */}

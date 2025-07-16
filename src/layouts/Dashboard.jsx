@@ -23,7 +23,6 @@ const Dashboard = () => {
         },
         enabled: !!user?.email,
     });
-console.log(userData);
 
     const handleSignOut = () => {
         signOut(auth)
@@ -54,7 +53,7 @@ console.log(userData);
         <>
             <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard"><MdOutlineDashboard size={22} /> Analytics</Link>
             <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/OrganizerProfile"><MdOutlinePerson size={22} />Participant Profile</Link>
-            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/"><MdOutlineAddLocation size={22} />Registered Camps</Link>
+            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/RegisteredCamps"><MdOutlineAddLocation size={22} />Registered Camps</Link>
             <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/"><MdOutlineSettings size={22} />Payment History</Link>
         </>
     );
@@ -72,12 +71,12 @@ console.log(userData);
             <ToastContainer />
             {/* --- DESKTOP SIDEBAR --- */}
             <aside className="w-72 bg-gradient-to-br from-[#e5f2fa] to-[#a7d4f9] sticky top-0 h-screen hidden lg:flex flex-col p-6">
-                <div className="flex items-center gap-3 mb-10">
+                <Link to='/' className="flex items-center gap-3 mb-10">
                     <div className="bg-[#1e74d2] p-2 rounded-lg">
                         <img className='w-12' src="https://res.cloudinary.com/dv6p7mprd/image/upload/v1752010021/ChatGPT_Image_Jul_8__2025__03_05_06_AM-removebg-preview_nbdpj2.png" alt="" />
                     </div>
                     <h1 className="text-2xl font-bold text-gray-600">MediCamp</h1>
-                </div>
+                </Link>
 
                 <nav className="flex-1 flex flex-col gap-3 text-gray-600">
                     {isRoleLoading || !userData ? (
