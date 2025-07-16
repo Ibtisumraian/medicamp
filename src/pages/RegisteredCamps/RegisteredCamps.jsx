@@ -191,7 +191,7 @@ const RegisteredCamps = () => {
                       <td className="p-4 font-medium text-slate-900">{reg.camp_name}</td>
                       <td className="p-4">${reg.camp_fee}</td>
                       <td className="p-4">
-                        {reg.paymentStatus === 'Paid' ? (
+                        {reg.isPayment_confirmed === true ? (
                           <div className="flex items-center gap-2 text-green-600 font-semibold">
                             <CheckCircle className="w-5 h-5" /> Paid
                           </div>
@@ -202,7 +202,7 @@ const RegisteredCamps = () => {
                         )}
                       </td>
                       <td className="p-4">
-                        {reg.confirmationStatus === 'Confirmed' ? (
+                        {reg.isAdmin_approved === true ? (
                           <div className="inline-flex items-center gap-2 text-teal-700 bg-teal-100 px-3 py-1 rounded-full font-semibold">
                             <ShieldCheck className="w-5 h-5" /> Confirmed
                           </div>
@@ -216,12 +216,12 @@ const RegisteredCamps = () => {
                         <div className="flex justify-center items-center gap-3">
                           <button
                             onClick={() => handleCancelClick(reg)}
-                            disabled={reg.paymentStatus === 'Paid'}
+                            disabled={reg.isPayment_confirmed === true }
                             className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-rose-600 bg-rose-100 hover:bg-rose-200 disabled:bg-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed"
                           >
                             <XCircle className="w-4 h-4" /> Cancel
                           </button>
-                          {reg.paymentStatus === 'Paid' && (
+                          {reg.isPayment_confirmed === true && (
                             <button
                               onClick={() => handleFeedbackClick(reg)}
                               className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-[#1e74d2] bg-indigo-100 hover:bg-indigo-200"
