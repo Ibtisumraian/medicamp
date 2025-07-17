@@ -3,7 +3,6 @@ import { Link } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure/useAxiosSecure";
 
-// --- SVG Icons Component (Updated with new primary color) ---
 const Icons = {
   Search: () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" /></svg>,
   Sort: () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h13M3 8h9M3 12h9m-9 4h6" /></svg>,
@@ -76,7 +75,7 @@ const AvailableCamps = () => {
 
       {/* --- Controls Bar --- */}
       <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-md shadow-sm py-4 px-4 md:px-8">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-4 items-center justify-between">
+        <div className="w-9/12 mx-auto flex flex-col md:flex-row gap-4 items-center justify-between">
             {/* Search Bar */}
             <div className="relative w-full md:w-1/3">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
@@ -118,7 +117,7 @@ const AvailableCamps = () => {
       </div>
       
       {/* --- Camps Grid --- */}
-      <div className="max-w-7xl mx-auto py-12 px-4 md:px-8">
+      <div className="w-9/12 mx-auto py-12 px-4 md:px-8">
         {filteredAndSortedCamps.length > 0 ? (
           <div className={`grid ${layout} gap-8`}>
             {filteredAndSortedCamps.map((camp) => (
