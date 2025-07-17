@@ -54,7 +54,7 @@ const Dashboard = () => {
             <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard"><MdOutlineDashboard size={22} /> Analytics</Link>
             <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/OrganizerProfile"><MdOutlinePerson size={22} />Participant Profile</Link>
             <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/RegisteredCamps"><MdOutlineAddLocation size={22} />Registered Camps</Link>
-            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/"><MdOutlineSettings size={22} />Payment History</Link>
+            <Link className='flex items-center gap-2 mb-4 w-fit' to="/Dashboard/PaymentHistory"><MdOutlineSettings size={22} />Payment History</Link>
         </>
     );
 
