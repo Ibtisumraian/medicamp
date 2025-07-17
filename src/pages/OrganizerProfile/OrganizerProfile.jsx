@@ -111,8 +111,9 @@ const OrganizerProfile = () => {
                         <img src={user.photoURL || 'https://res.cloudinary.com/dv6p7mprd/image/upload/v1752430406/istockphoto-1477583621-612x612_x1gcca.jpg'} alt="Profile" className="h-28 w-28 rounded-full object-cover border-4 border-white shadow-lg" />
                     </div>
                     <div className="text-center sm:text-left mt-4 sm:mt-10">
-                        <h1 className="text-3xl font-bold text-slate-800">{user.displayName || 'Organizer Name'}</h1>
-                        <p className="text-md text-[#1e74d2] font-semibold">{profileData.role}</p>
+                        <h1 className="text-3xl font-bold text-slate-800">{user.displayName || 'Profile Name'}</h1>
+                        {/* <p className="text-md text-[#1e74d2] font-semibold">{profileData.role}</p> */}
+                        <p className="text-md text-[#1e74d2] font-semibold">Customize Profile</p>
                     </div>
                     <button
                         onClick={() => setIsEditing(!isEditing)}

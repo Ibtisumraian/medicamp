@@ -187,7 +187,7 @@ const RegisteredCamps = () => {
               <tbody className="divide-y divide-slate-200">
                 {filteredCamps.length > 0 ? (
                   filteredCamps.map((reg) => (
-                    <tr key={reg._id} className="hover:bg-slate-50">
+                    (reg.isAdmin_cancel === false ? <tr key={reg._id} className="hover:bg-slate-50">
                       <td className="p-4 font-medium text-slate-900">{reg.camp_name}</td>
                       <td className="p-4">${reg.camp_fee}</td>
                       <td className="p-4">
@@ -202,7 +202,7 @@ const RegisteredCamps = () => {
                         )}
                       </td>
                       <td className="p-4">
-                        {reg.isAdmin_approved === true ? (
+                        {reg.isPayment_confirmed === true || reg.isAdmin_approved === true? (
                           <div className="inline-flex items-center gap-2 text-teal-700 bg-teal-100 px-3 py-1 rounded-full font-semibold">
                             <ShieldCheck className="w-5 h-5" /> Confirmed
                           </div>
@@ -231,7 +231,10 @@ const RegisteredCamps = () => {
                           )}
                         </div>
                       </td>
-                    </tr>
+                    </tr> : <tr>
+                        <td className="p-4 font-medium text-slate-900">{reg.camp_name}</td>
+                        <td className='p-4 text-red-400'>Your Registration has been canceled by the admin</td>
+                    </tr>)
                   ))
                 ) : (
                   <tr>

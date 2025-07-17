@@ -19,12 +19,7 @@ const chartData = [
   { month: 'Jul', registrations: 110 },
 ];
 
-// const stats = [
-//   { name: 'Total Camps', value: '12' },
-//   { name: 'Total Registrations', value: '1,845' },
-//   { name: 'Upcoming Camps', value: '3' },
-//   { name: 'Avg. Participants', value: '153' },
-// ];
+
 
 const recentActivity = [
   { id: 1, type: 'New Registration', text: 'Rahim Sheikh registered for "Dental Care Camp".', time: '2 hours ago' },
@@ -181,7 +176,7 @@ const Overview = () => {
                 <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-[#1e74d2] transition-colors" />
               </Link>
 
-              <Link to="/dashboard/manage-registrations" className="group bg-white p-6 rounded-2xl shadow-md border border-slate-200/80 flex items-center justify-between transition-all hover:border-[#1e74d2] hover:shadow-lg">
+              <Link to="/Dashboard/ManageRegisteredCamps" className="group bg-white p-6 rounded-2xl shadow-md border border-slate-200/80 flex items-center justify-between transition-all hover:border-[#1e74d2] hover:shadow-lg">
                 <div className="flex items-center gap-4">
                   <div className="bg-[#e5f2fa] p-3 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#1e74d2]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

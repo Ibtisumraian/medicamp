@@ -250,7 +250,7 @@ const AddACamp = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full flex items-center justify-center px-8 py-3 bg-gradient-to-r text-md 2xl:text-2xl from-blue-600 to-blue-500 text-white font-semibold rounded-xl shadow-lg hover:from-blue-700 hover:to-blue-600 transition disabled:bg-slate-400 disabled:cursor-wait"
+              className="w-full cursor-pointer flex items-center justify-center px-8 py-3 bg-gradient-to-r text-md 2xl:text-2xl from-blue-600 to-blue-500 text-white font-semibold rounded-xl shadow-lg hover:from-blue-700 hover:to-blue-600 transition disabled:bg-slate-400 disabled:cursor-wait"
             >
               {isSubmitting ? 'Submitting...' : <span className='flex items-center gap-2'><FiPlusCircle className='text-md 2xl:text-2xl' /> Publish Camp</span>}
             </button>

@@ -32,7 +32,8 @@ const CampDetails = () => {
             campId: camp._id,
             isPayment_pending: true,
             isPayment_confirmed: false,
-            isAdmin_approved: false
+            isAdmin_approved: false,
+            isAdmin_cancel: false,
         };
 
         try {
@@ -51,6 +52,7 @@ const CampDetails = () => {
 
             const res = await axiosSecure.post('/participants', joinCampData);
             if (res.data.insertedId) {
+                await axiosSecure.patch(`/camps/participantCount/${camp._id}`);
             Swal.fire({
                 position: "top-end",
                 icon: "success",
