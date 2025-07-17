@@ -56,6 +56,7 @@ const SignIn = () => {
           navigate(location?.state || '/');
         })
         .catch(error => {
+          console.log(error);          
           toast.error('Invalid email or password!!', {
             position: "top-center",
             autoClose: 5000,

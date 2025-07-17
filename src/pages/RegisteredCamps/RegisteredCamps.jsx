@@ -145,7 +145,7 @@ const RegisteredCamps = () => {
       participantName: user?.displayName,
       participantEmail: user?.email,
     };
-    submitFeedback(payload);
+      submitFeedback(payload);
     setIsFeedbackModalOpen(false);
   };
 
