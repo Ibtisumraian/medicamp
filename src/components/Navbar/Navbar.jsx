@@ -14,6 +14,7 @@ const Navbar = () => {
     const handleSignOut = () => {
     signOut(auth)
       .then(() => {
+        localStorage.removeItem('token');
         toast.success('Sign Out Successful!', {
           position: 'top-left',
           autoClose: 5000,

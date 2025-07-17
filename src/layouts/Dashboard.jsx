@@ -27,6 +27,7 @@ const Dashboard = () => {
     const handleSignOut = () => {
         signOut(auth)
             .then(() => {
+                localStorage.removeItem('token');
                 toast.success('Sign Out Successful!', {
                     position: 'top-right', autoClose: 3000, theme: 'light', transition: Bounce,
                 });
@@ -91,7 +92,7 @@ const Dashboard = () => {
                         className="flex items-center gap-4 w-full mt-2 py-3 rounded-xl text-red-400 font-semibold transition-all duration-300 hover:bg-red-100"
                     > 
                         <GoSignOut size={22} />
-                        <span>Logout</span>
+                        <span>Sign Out</span>
                     </button>
                 </div>
             </aside>
