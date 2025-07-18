@@ -28,6 +28,7 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit, campName }) => {
             return;
         }
         onSubmit({ rating, comment });
+        setComment('')
     };
 
     return (
@@ -59,8 +60,8 @@ const FeedbackModal = ({ isOpen, onClose, onSubmit, campName }) => {
                     ></textarea>
                 </div>
                 <div className="flex justify-end gap-4">
-                    <button onClick={onClose} className="px-6 py-2 rounded-lg font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200">Cancel</button>
-                    <button onClick={handleSubmit} className="px-6 py-2 rounded-lg font-semibold text-white bg-[#1e74d2] hover:bg-blue-700 flex items-center gap-2">
+                    <button onClick={onClose} className="px-6 py-2 cursor-pointer rounded-lg font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200">Cancel</button>
+                    <button onClick={handleSubmit} className="px-6 cursor-pointer py-2 rounded-lg font-semibold text-white bg-[#1e74d2] hover:bg-blue-700 flex items-center gap-2">
                         <Send className="w-4 h-4" /> Submit
                     </button>
                 </div>
@@ -226,9 +227,10 @@ const RegisteredCamps = () => {
                                         </td>
                                         <td className="p-4 text-center">
                                             <div className="flex justify-center items-center gap-3">
-                                                <button onClick={() => handleCancelClick(reg)} disabled={reg.isPayment_confirmed === true} className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-rose-600 bg-rose-100 hover:bg-rose-200 disabled:bg-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed">
+                                                {reg.isPayment_confirmed !== true && (<button onClick={() => handleCancelClick(reg)} disabled={reg.isPayment_confirmed === true} className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-rose-600 bg-rose-100 hover:bg-rose-200 disabled:bg-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed">
                                                     <XCircle className="w-4 h-4" /> Cancel
-                                                </button>
+                                                </button>)}
+                                                
                                                 {reg.isPayment_confirmed === true && (
                                                      <button onClick={() => handleFeedbackClick(reg)} className="flex cursor-pointer items-center gap-2 px-4 py-2 rounded-lg font-semibold text-[#1e74d2] bg-indigo-100 hover:bg-indigo-200">
                                                          <MessageSquare className="w-4 h-4" /> Feedback
@@ -253,7 +255,7 @@ const RegisteredCamps = () => {
                             <button
                                 onClick={() => setCurrentPage(prev => prev - 1)}
                                 disabled={currentPage === 1}
-                                className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed"
+                                className="flex items-center cursor-pointer gap-2 px-4 py-2 rounded-lg font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed"
                             >
                                 <ChevronLeft className="w-4 h-4" /> Previous
                             </button>
@@ -263,7 +265,7 @@ const RegisteredCamps = () => {
                             <button
                                 onClick={() => setCurrentPage(prev => prev + 1)}
                                 disabled={currentPage === totalPages}
-                                className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed"
+                                className="flex items-center cursor-pointer gap-2 px-4 py-2 rounded-lg font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed"
                             >
                                 Next <ChevronRight className="w-4 h-4" />
                             </button>

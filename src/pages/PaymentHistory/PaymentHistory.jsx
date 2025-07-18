@@ -180,7 +180,7 @@ const PaymentHistory = () => {
                             <button
                                 onClick={() => setCurrentPage(prev => prev - 1)}
                                 disabled={currentPage === 1}
-                                className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed"
+                                className="flex items-center cursor-pointer gap-2 px-4 py-2 rounded-lg font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed"
                             >
                                 <ChevronLeft className="w-4 h-4" /> Previous
                             </button>
@@ -190,7 +190,7 @@ const PaymentHistory = () => {
                             <button
                                 onClick={() => setCurrentPage(prev => prev + 1)}
                                 disabled={currentPage === totalPages}
-                                className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed"
+                                className="flex items-center cursor-pointer gap-2 px-4 py-2 rounded-lg font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed"
                             >
                                 Next <ChevronRight className="w-4 h-4" />
                             </button>
