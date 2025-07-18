@@ -184,45 +184,81 @@ const CampDetails = () => {
 
             {/* --- REGISTRATION MODAL --- */}
             {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-60 backdrop-blur-sm">
-                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl m-4 transform transition-all duration-300 ease-in-out" style={{animation: 'fadeInScaleUp 0.3s'}}>
-                        <div className="p-8">
-                            {/* Modal Header */}
-                            <div className="flex justify-between items-start">
-                                <div>
-                                    <h2 className="text-2xl font-bold text-slate-800">Register for Camp</h2>
-                                    <p className="text-slate-500 mt-1">Confirm your details to secure your spot.</p>
-                                </div>
-                                <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-600">&times;</button>
+                <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-opacity-60 backdrop-blur-sm px-4 py-12 sm:px-6">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl transform transition-all duration-300 ease-in-out max-h-screen overflow-y-auto">
+                        <div className="p-6 sm:p-8">
+                        {/* Modal Header */}
+                        <div className="flex justify-between items-start">
+                            <div>
+                            <h2 className="text-2xl font-bold text-slate-800">Register for Camp</h2>
+                            <p className="text-slate-500 mt-1">Confirm your details to secure your spot.</p>
+                            </div>
+                            <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-600 text-2xl leading-none">&times;</button>
+                        </div>
+
+                        {/* Registration Form */}
+                        <form onSubmit={handleSubmit(handleFormSubmit)} className="mt-6 space-y-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {/* Read-only fields */}
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700">Camp Name</label>
+                                <input type="text" readOnly {...register("camp_name")} value={camp.name} className="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md shadow-sm p-2" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700">Camp Fees</label>
+                                <input type="text" readOnly {...register("camp_fee")} value={camp.fees} className="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md shadow-sm p-2" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700">Location</label>
+                                <input type="text" readOnly {...register("location")} value={camp.location} className="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md shadow-sm p-2" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700">Healthcare Professional</label>
+                                <input type="text" readOnly {...register("healthcare_professional")} value={camp.professionalName} className="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md shadow-sm p-2" />
                             </div>
 
-                            {/* Registration Form */}
-                            <form onSubmit={handleSubmit(handleFormSubmit)} className="mt-6 space-y-4">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {/* Read-only fields */}
-                                    <div><label className="block text-sm font-medium text-slate-700">Camp Name</label><input type="text" readOnly {...register("camp_name")} value={camp.name} className="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md shadow-sm p-2" /></div>
-                                    <div><label className="block text-sm font-medium text-slate-700">Camp Fees</label><input type="text" readOnly {...register("camp_fee")} value={camp.fees} className="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md shadow-sm p-2" /></div>
-                                    <div><label className="block text-sm font-medium text-slate-700">Location</label><input type="text" readOnly {...register("location")} value={camp.location} className="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md shadow-sm p-2" /></div>
-                                    <div><label className="block text-sm font-medium text-slate-700">Healthcare Professional</label><input type="text" readOnly {...register("healthcare_professional")} value={camp.professionalName} className="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md shadow-sm p-2" /></div>
-                                    
-                                    {/* Participant info from context */}
-                                    <div><label className="block text-sm font-medium text-slate-700">Participant Name</label><input type="text" readOnly {...register("participant_name")} value={user.displayName} className="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md shadow-sm p-2" /></div>
-                                    <div><label className="block text-sm font-medium text-slate-700">Participant Email</label><input type="email" readOnly {...register("participant_email")} value={user.email} className="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md shadow-sm p-2" /></div>
+                            {/* Participant info */}
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700">Participant Name</label>
+                                <input type="text" readOnly {...register("participant_name")} value={user.displayName} className="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md shadow-sm p-2" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700">Participant Email</label>
+                                <input type="email" readOnly {...register("participant_email")} value={user.email} className="mt-1 block w-full bg-slate-100 border-slate-300 rounded-md shadow-sm p-2" />
+                            </div>
 
-                                    {/* Editable fields */}
-                                    <div><label htmlFor="age" className="block text-sm font-medium text-slate-700">Age</label><input type="number" id="age" required {...register("age")} className="mt-1 block w-full border-slate-300 rounded-md shadow-sm p-2 focus:border-[#1e74d2] focus:ring-[#1e74d2]" /></div>
-                                    <div><label htmlFor="phone" className="block text-sm font-medium text-slate-700">Phone Number</label><input type="number" id="phone" required {...register("phone_number")} className="mt-1 block w-full border-slate-300 rounded-md shadow-sm p-2 focus:border-[#1e74d2] focus:ring-[#1e74d2]" /></div>
-                                    <div><label htmlFor="gender" className="block text-sm font-medium text-slate-700">Gender</label><select id="gender" required {...register("gender")} className="mt-1 block w-full border-slate-300 rounded-md shadow-sm p-2 focus:border-[#1e74d2] focus:ring-[#1e74d2]"><option>Male</option><option>Female</option><option>Other</option></select></div>
-                                    <div><label htmlFor="emergency-contact" className="block text-sm font-medium text-slate-700">Emergency Contact</label><input type="number" id="emergency-contact" required {...register("emergency_contact")} className="mt-1 block w-full border-slate-300 rounded-md shadow-sm p-2 focus:border-[#1e74d2] focus:ring-[#1e74d2]" /></div>
-                                </div>
-                                <div className="pt-6 flex justify-end space-x-4">
-                                    <button type="button" onClick={() => setIsModalOpen(false)} className="px-6 py-2 text-sm font-medium text-slate-700 bg-slate-100 rounded-lg cursor-pointer hover:bg-slate-200">Cancel</button>
-                                    <button type="submit" className="px-6 py-2 text-sm cursor-pointer font-medium text-white bg-[#1e74d2] rounded-lg hover:bg-[#185dab] shadow-sm">Confirm Registration</button>
-                                </div>
-                            </form>
+                            {/* Editable fields */}
+                            <div>
+                                <label htmlFor="age" className="block text-sm font-medium text-slate-700">Age</label>
+                                <input type="number" id="age" required {...register("age")} className="mt-1 block w-full border-slate-300 rounded-md shadow-sm p-2 focus:border-[#1e74d2] focus:ring-[#1e74d2]" />
+                            </div>
+                            <div>
+                                <label htmlFor="phone" className="block text-sm font-medium text-slate-700">Phone Number</label>
+                                <input type="number" id="phone" required {...register("phone_number")} className="mt-1 block w-full border-slate-300 rounded-md shadow-sm p-2 focus:border-[#1e74d2] focus:ring-[#1e74d2]" />
+                            </div>
+                            <div>
+                                <label htmlFor="gender" className="block text-sm font-medium text-slate-700">Gender</label>
+                                <select id="gender" required {...register("gender")} className="mt-1 block w-full border-slate-300 rounded-md shadow-sm p-2 focus:border-[#1e74d2] focus:ring-[#1e74d2]">
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label htmlFor="emergency-contact" className="block text-sm font-medium text-slate-700">Emergency Contact</label>
+                                <input type="number" id="emergency-contact" required {...register("emergency_contact")} className="mt-1 block w-full border-slate-300 rounded-md shadow-sm p-2 focus:border-[#1e74d2] focus:ring-[#1e74d2]" />
+                            </div>
+                            </div>
+
+                            <div className="pt-6 flex flex-col sm:flex-row justify-end sm:space-x-4 space-y-3 sm:space-y-0">
+                            <button type="button" onClick={() => setIsModalOpen(false)} className="w-full sm:w-auto px-6 py-2 text-sm font-medium text-slate-700 bg-slate-100 rounded-lg hover:bg-slate-200">Cancel</button>
+                            <button type="submit" className="w-full sm:w-auto px-6 py-2 text-sm font-medium text-white bg-[#1e74d2] rounded-lg hover:bg-[#185dab] shadow-sm">Confirm Registration</button>
+                            </div>
+                        </form>
                         </div>
                     </div>
-                </div>
+                    </div>
+
             )}
         </main>
     );

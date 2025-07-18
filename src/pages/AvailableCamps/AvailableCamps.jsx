@@ -43,8 +43,6 @@ const AvailableCamps = () => {
         const searchLower = searchTerm.toLowerCase();
         return (
           camp.searchKeyWords.toLowerCase().includes(searchLower) 
-          // camp.location.toLowerCase().includes(searchLower) ||
-          // camp.date.toLowerCase().includes(searchLower)
         );
       })
       .sort((a, b) => {
@@ -75,7 +73,7 @@ const AvailableCamps = () => {
 
       {/* --- Controls Bar --- */}
       <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-md shadow-sm py-4 px-4 md:px-8">
-        <div className="w-9/12 mx-auto flex flex-col md:flex-row gap-4 items-center justify-between">
+        <div className="w-11/12 2xl:w-9/12 mx-auto flex flex-col md:flex-row gap-4 items-center justify-between">
             {/* Search Bar */}
             <div className="relative w-full md:w-1/3">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
@@ -117,7 +115,7 @@ const AvailableCamps = () => {
       </div>
       
       {/* --- Camps Grid --- */}
-      <div className="w-9/12 mx-auto py-12 px-4 md:px-8">
+      <div className="w-11/12 2xl:w-9/12 mx-auto py-12 px-4 md:px-8">
         {filteredAndSortedCamps.length > 0 ? (
           <div className={`grid ${layout} gap-8`}>
             {filteredAndSortedCamps.map((camp) => (
@@ -151,9 +149,9 @@ const AvailableCamps = () => {
                 </div>
 
                 <div className="px-6 pb-6 pt-4 border-t border-slate-100 mt-4 flex justify-between items-center">
-                  <div className="flex items-center text-sm text-slate-500 font-medium">
-                    <Icons.Participants />
-                    <span>{camp.participantCount} Participants</span>
+                  <div className="flex flex-col  text-sm text-slate-500 font-medium">
+                    <p>Participants</p>                    
+                    <span className="flex items-center"><Icons.Participants />{camp.participantCount} </span>
                   </div>
 
                   <Link
