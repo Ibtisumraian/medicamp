@@ -1,17 +1,18 @@
-import React, { useState, useMemo } from 'react'; 
+import React, { useState, useMemo, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
-import { CheckCircle, Clock, XCircle, ShieldCheck, UserCheck, ShieldAlert, Search } from 'lucide-react';
-
+import { CheckCircle, Clock, XCircle, ShieldCheck, UserCheck, ShieldAlert, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import useAxiosSecure from '../../hooks/useAxiosSecure/useAxiosSecure';
 
 const ManageRegisteredCamps = () => {
     const axiosSecure = useAxiosSecure();
     const queryClient = useQueryClient();
-
     const [searchTerm, setSearchTerm] = useState('');
 
-    // Fetch all registered camps data
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const ITEMS_PER_PAGE = 10;
+
     const { data: registrations = [], isLoading, error } = useQuery({
         queryKey: ['allRegistrations'],
         queryFn: async () => {
@@ -20,13 +21,12 @@ const ManageRegisteredCamps = () => {
         },
     });
 
-    // --- 2. Filter the registrations on the client-side ---
     const filteredRegistrations = useMemo(() => {
         if (!searchTerm) {
-            return registrations; // Return all if search is empty
+            return registrations;
         }
         const lowercasedFilter = searchTerm.toLowerCase();
-        return registrations.filter(reg => 
+        return registrations.filter(reg =>
             reg.participant_name.toLowerCase().includes(lowercasedFilter) ||
             reg.participant_email.toLowerCase().includes(lowercasedFilter) ||
             reg.camp_name.toLowerCase().includes(lowercasedFilter)
@@ -34,7 +34,21 @@ const ManageRegisteredCamps = () => {
     }, [searchTerm, registrations]);
 
 
-    // --- Mutations and handlers remain the same ---
+    const totalPages = Math.ceil(filteredRegistrations.length / ITEMS_PER_PAGE);
+
+
+    const paginatedRegistrations = useMemo(() => {
+        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+        return filteredRegistrations.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+    }, [currentPage, filteredRegistrations]);
+
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm]);
+
+
+
     const { mutate: confirmRegistration, isPending: isConfirming } = useMutation({
         mutationFn: (registrationId) => {
             return axiosSecure.patch(`/registrations/confirm/${registrationId}`);
@@ -93,7 +107,7 @@ const ManageRegisteredCamps = () => {
     if (isLoading) {
         return <div className="flex justify-center items-center h-screen"><span className="loading loading-spinner loading-lg text-indigo-600"></span></div>;
     }
-    
+
     if (error) {
         return <div className="text-center text-red-500 my-20 font-semibold text-lg">Error loading data: {error.message}</div>;
     }
@@ -107,7 +121,6 @@ const ManageRegisteredCamps = () => {
                 </header>
 
                 <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-                    {/* --- 3. Search Bar UI --- */}
                     <div className="p-6 border-b border-slate-200">
                         <div className="relative w-full md:max-w-sm">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
@@ -133,8 +146,8 @@ const ManageRegisteredCamps = () => {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-200">
-                                {/* --- 4. Map over the filtered list --- */}
-                                {filteredRegistrations.length > 0 ? filteredRegistrations.map((reg) => (
+
+                                {paginatedRegistrations.length > 0 ? paginatedRegistrations.map((reg) => (
                                     (reg.isAdmin_cancel === false ? <tr key={reg._id} className="hover:bg-slate-50">
                                         <td className="p-4 font-medium text-slate-900">
                                             <div>{reg.participant_name}</div>
@@ -161,9 +174,9 @@ const ManageRegisteredCamps = () => {
                                                     <ShieldCheck className="w-5 h-5" /> Confirmed
                                                 </div>
                                             ) : (
-                                                <button 
+                                                <button
                                                     onClick={() => handleConfirmClick(reg)}
-                                                    disabled={isConfirming || reg.isPayment_confirmed !== true }
+                                                    disabled={isConfirming || reg.isPayment_confirmed !== true}
                                                     className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-400 disabled:cursor-not-allowed transition-all"
                                                 >
                                                     <UserCheck className="w-4 h-4" /> Pending
@@ -171,8 +184,8 @@ const ManageRegisteredCamps = () => {
                                             )}
                                         </td>
                                         <td className="p-4 text-center">
-                                            <button 
-                                                onClick={() => handleCancelClick(reg)} 
+                                            <button
+                                                onClick={() => handleCancelClick(reg)}
                                                 disabled={reg.isPayment_confirmed === true || reg.isAdmin_approved === true}
                                                 className="flex items-center justify-center mx-auto gap-2 px-4 py-2 rounded-lg font-semibold text-rose-600 cursor-pointer bg-rose-100 hover:bg-rose-200 disabled:bg-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed transition-all"
                                             >
@@ -194,6 +207,29 @@ const ManageRegisteredCamps = () => {
                             </tbody>
                         </table>
                     </div>
+
+
+                    {totalPages >= 1 && (
+                        <div className="p-4 flex items-center justify-center gap-4 border-t border-gray-200">
+                            <button
+                                onClick={() => setCurrentPage(prev => prev - 1)}
+                                disabled={currentPage === 1}
+                                className="flex items-center cursor-pointer gap-2 px-4 py-2 rounded-lg font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed"
+                            >
+                                <ChevronLeft className="w-4 h-4" /> Previous
+                            </button>
+                            <span className="text-sm font-semibold text-slate-600">
+                                Page {currentPage} of {totalPages}
+                            </span>
+                            <button
+                                onClick={() => setCurrentPage(prev => prev + 1)}
+                                disabled={currentPage === totalPages}
+                                className="flex items-center cursor-pointer gap-2 px-4 py-2 rounded-lg font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed"
+                            >
+                                Next <ChevronRight className="w-4 h-4" />
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

@@ -40,6 +40,8 @@ const CampDetails = () => {
             const { data: participants } = await axiosSecure.get(`/participants/email/${user.email}`);
             const alreadyJoined = participants?.some(participant => participant.campId === camp._id);
             
+            
+            
             if (alreadyJoined) {
             Swal.fire({
                 icon: "warning",
@@ -102,7 +104,7 @@ const CampDetails = () => {
                 <div className="lg:col-span-1 space-y-8">
                     {/* Camp Image */}
                     <div className="rounded-2xl shadow-2xl overflow-hidden aspect-w-1 aspect-h-1">
-                        <img className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070" alt="A doctor kindly speaking to a patient." />
+                        <img className="w-full h-full object-cover" src={camp.imageUrl} />
                     </div>
 
                     {/* Details Card */}
@@ -153,7 +155,7 @@ const CampDetails = () => {
 
                         {/* Lead Professional */}
                         <div className="mt-6 flex items-center space-x-4 border-t border-b border-slate-200 py-4">
-                            <img className="h-16 w-16 rounded-full object-cover" src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2070" alt="Portrait of Dr. Ibrahim Chowdhury" />
+                            {/* <img className="h-16 w-16 rounded-full object-cover" src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2070" alt="Portrait of Dr. Ibrahim Chowdhury" /> */}
                             <div>
                                 <p className="text-sm text-slate-500">Lead Healthcare Professional</p>
                                 <p className="text-xl font-bold text-[#1e74d2]">{camp.professionalName}</p>

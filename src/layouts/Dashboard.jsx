@@ -89,7 +89,7 @@ const Dashboard = () => {
                     <Link className='flex items-center gap-2 text-gray-600' to="/"><GoHome size={22} />Back to Home</Link>
                     <button
                         onClick={handleSignOut}
-                        className="flex items-center gap-4 w-full mt-2 py-3 rounded-xl text-red-400 font-semibold transition-all duration-300 hover:bg-red-100"
+                        className="flex items-center cursor-pointer gap-4 w-full mt-2 py-3 rounded-xl text-red-400 font-semibold transition-all duration-300 hover:bg-red-100"
                     > 
                         <GoSignOut size={22} />
                         <span>Sign Out</span>

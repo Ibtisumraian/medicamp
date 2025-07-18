@@ -22,7 +22,7 @@ const uploadToCloudinary = async (file) => {
   );
 
   if (!res.ok) {
-    throw new Error('Image upload failed');
+    throw new Error('Image should be within 2MB');
   }
 
   const data = await res.json();
