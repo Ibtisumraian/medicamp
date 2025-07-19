@@ -250,9 +250,9 @@ const CampDetails = () => {
                             </div>
                             </div>
 
-                            <div className="pt-6 flex flex-col sm:flex-row justify-end sm:space-x-4 space-y-3 sm:space-y-0">
-                            <button type="button" onClick={() => setIsModalOpen(false)} className="w-full sm:w-auto px-6 py-2 text-sm font-medium text-slate-700 bg-slate-100 rounded-lg hover:bg-slate-200">Cancel</button>
-                            <button type="submit" className="w-full sm:w-auto px-6 py-2 text-sm font-medium text-white bg-[#1e74d2] rounded-lg hover:bg-[#185dab] shadow-sm">Confirm Registration</button>
+                            <div className="pt-6  flex flex-col sm:flex-row justify-end sm:space-x-4 space-y-3 sm:space-y-0">
+                            <button type="button" onClick={() => setIsModalOpen(false)} className="w-full cursor-pointer sm:w-auto px-6 py-2 text-sm font-medium text-slate-700 bg-slate-100 rounded-lg hover:bg-slate-200">Cancel</button>
+                            <button type="submit" className="w-full sm:w-auto px-6 py-2 text-sm font-medium text-white bg-[#1e74d2] rounded-lg hover:bg-[#185dab] cursor-pointer shadow-sm">Confirm Registration</button>
                             </div>
                         </form>
                         </div>
