@@ -103,7 +103,7 @@ const Dashboard = () => {
                     <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
                     <div className="drawer-content flex flex-col">
                         {/* Navbar for Mobile */}
-                        <div className="navbar bg-gradient-to-br from-[#e5f2fa] to-[#a7d4f9] text-gray-600 shadow-lg">
+                        <div className="navbar bg-[#a7d4f9] text-gray-600 shadow-lg">
                             <div className="flex-none">
                                 <label htmlFor="my-drawer-3" aria-label="open sidebar" className="btn btn-square btn-ghost">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block h-6 w-6 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
@@ -115,11 +115,11 @@ const Dashboard = () => {
                            <Outlet />
                         </div>
                     </div>
-                    <div className="drawer-side z-50">
+                    <div className="drawer-side z-50 ">
                         <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
-                        <div className="menu p-4 w-72 min-h-full bg-white flex flex-col">
+                        <div className="menu p-4 w-72 min-h-full bg-gradient-to-tl from-[#e5f2fa] to-[#a7d4f9] flex flex-col">
                             <h1 className="text-xl font-bold text-slate-800 p-4 mb-4">MediCamp</h1>
-                            <nav className="flex-1 flex flex-col gap-2 text-gray-600">
+                            <nav className="flex-1 flex flex-col gap-2 text-gray-600 ">
                                 {isRoleLoading || !userData ? (
                                     <SidebarSkeleton />
                                     ) : userData.role.toLowerCase() === 'admin' ? adminSidebarLinks : userSidebarLinks}

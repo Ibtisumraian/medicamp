@@ -4,7 +4,7 @@ import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Tooltip,
 import { DollarSign, Hash, BarChart, MapPin } from 'lucide-react';
 import useAuth from '../../hooks/useAuth/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure/useAxiosSecure';
-
+import { TiUserOutline } from "react-icons/ti";
 
 const StatCard = ({ title, value, icon }) => (
     <div className="bg-white p-6 rounded-2xl shadow-lg border border-slate-200/60 transition-transform transform hover:-translate-y-1">
@@ -75,7 +75,7 @@ const Analytics = () => {
 
 
     if (isLoading || authLoading) {
-        return <div className="flex justify-center items-center h-screen"><span className="loading loading-spinner loading-lg text-indigo-600"></span></div>;
+        return <div className="flex justify-center items-center h-screen"><span className="loading loading-spinner loading-lg text-[#1e74d2]"></span></div>;
     }
 
     if (registrations.length === 0) {
@@ -99,7 +99,7 @@ const Analytics = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <StatCard title="Total Spent" value={summaryStats.totalSpent} icon={<DollarSign className="w-6 h-6"/>} />
                     <StatCard title="Camps Attended" value={summaryStats.campsAttended} icon={<Hash className="w-6 h-6"/>} />
-                    <StatCard title="Favorite Location" value={summaryStats.favoriteLocation} icon={<MapPin className="w-6 h-6"/>} />
+                    <StatCard title="Welcome Aboard" value={user.displayName} icon={<TiUserOutline  className="w-6 h-6"/>} />
                 </div>
 
                 {/* --- Chart Section --- */}

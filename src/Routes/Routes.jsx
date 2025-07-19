@@ -16,6 +16,7 @@ import RegisteredCamps from "../pages/RegisteredCamps/RegisteredCamps";
 import PayForRegistration from "../pages/PayForRegistration/PayForRegistration";
 import PaymentHistory from "../pages/PaymentHistory/PaymentHistory";
 import ManageRegisteredCamps from "../pages/ManageRegisteredCamps/ManageRegisteredCamps";
+import PageNotFound from "../pages/PageNotFound/PageNotFound";
 
 export const router = createBrowserRouter([
   {
@@ -80,18 +81,14 @@ export const router = createBrowserRouter([
         path: '/Dashboard/PaymentHistory',
         element: <PrivateRoute><PaymentHistory/></PrivateRoute>
       },
-      // {
-      //   path: '/Dashboard/ManageCamps',
-      //   element: <PrivateRoute><ManageCamps/></PrivateRoute>
-      // },
-      // {
-      //   path: '/Dashboard/UpdateCamp/:id',
-      //   element: <PrivateRoute><UpdateCamp/></PrivateRoute>
-      // }
     ]
   },
   {
     path: '/PayForRegistration',
     element:<PrivateRoute><PayForRegistration/></PrivateRoute>
+  },
+  {
+    path: '*',
+    Component: PageNotFound
   }
 ]);

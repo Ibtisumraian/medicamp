@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams, useNavigate } from 'react-router';
 import { FaCloudUploadAlt } from 'react-icons/fa';
@@ -39,22 +39,16 @@ console.log(id);
   } = useForm();
 
   const selectedImage = watch('image');
-  // const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [camp, setCamp] = useState(null);
-
-  // Fetch the existing camp data
+  
   const { data: camp, isLoading } = useQuery({
     queryKey: ['camp', id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/camps/${id}`);
-      const data = res.data;
-
-      // Format date for form input
+      const data = res.data;   
       const [dd, mm, yy] = data.date.split('-');
       const formattedDate = `${yy}-${mm}-${dd}`;
-
-      // Prefill form
+  
       reset({
         campName: data.name,
         campFees: data.fees,
@@ -80,6 +74,7 @@ console.log(id);
       try {
         imageUrl = await uploadToCloudinary(data.image[0]);
       } catch (error) {
+        console.log(error);        
         Swal.fire('Upload Error', 'Failed to upload new image.', 'error');
         setIsSubmitting(false);
         return;
@@ -98,7 +93,7 @@ console.log(id);
       sortingTime: new Date(`${data.date}T${data.time}`).toISOString(),
       location: data.location,
       professionalName: data.healthcareProfessionalName,
-      participantCount: parseInt(data.participantCount),
+      participantCount: parseInt(camp.participantCount),
       description: data.description,
       searchKeyWords: (
         data.campName +
@@ -204,7 +199,7 @@ console.log(id);
           {/* Participant Count */}
           <div>
             <label className="block font-semibold mb-1">Participant Count</label>
-            <input type="number" readOnly {...register('participantCount')} className="input input-bordered w-full bg-slate-100 cursor-not-allowed text-gray-500" />
+            <input type="number" readOnly value={camp.participantCount} {...register('participantCount')} className="input input-bordered w-full bg-slate-100 cursor-not-allowed text-gray-500" />
           </div>
 
           {/* Image Upload */}
@@ -226,7 +221,7 @@ console.log(id);
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-blue-600 disabled:bg-slate-400 disabled:cursor-wait"
+              className="w-full flex cursor-pointer items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-blue-600 disabled:bg-slate-400 disabled:cursor-wait"
             >
               <FiRefreshCw className={isSubmitting ? 'animate-spin' : ''} />
               {isSubmitting ? 'Updating...' : 'Update Camp'}

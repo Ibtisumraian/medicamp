@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaHandHoldingMedical } from 'react-icons/fa';
+import { Link } from 'react-router';
 
 const Footer = () => {
     return (
@@ -31,10 +32,10 @@ const Footer = () => {
                     <div>
                     <h3 className="text-xl font-bold text-slate-800 poppins">Quick Links</h3>
                     <ul className="mt-4 space-y-2 text-slate-700">
-                        <li><a href="#" className="hover:text-[#1e74d2] transition-colors">About Us</a></li>
-                        <li><a href="#" className="hover:text-[#1e74d2] transition-colors">Our Camps</a></li>
-                        <li><a href="#" className="hover:text-[#1e74d2] transition-colors">Feedback</a></li>
-                        <li><a href="#" className="hover:text-[#1e74d2] transition-colors">Contact</a></li>
+                        {/* <li><a href="#" className="hover:text-[#1e74d2] transition-colors">About Us</a></li> */}
+                        <li><Link to='/AvailableCamps' className="hover:text-[#1e74d2] transition-colors">Our Camps</Link></li>
+                        <li><a href="#feedbacks" className="hover:text-[#1e74d2] transition-colors">Feedback</a></li>
+                        {/* <li><a href="#" className="hover:text-[#1e74d2] transition-colors">Contact</a></li> */}
                     </ul>
                     </div>
 
