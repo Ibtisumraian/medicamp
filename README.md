@@ -102,7 +102,23 @@ MediCamp is a full-stack MERN application designed to streamline the organizatio
 
 ##  Folder Structure 
 
-<pre lang="markdown"><code>### Folder Structure ``` src/ ├── assets/ # Images, logos, static files ├── components/ # Reusable UI components ├── context/ # React Contexts (e.g., AuthProvider) ├── hooks/ # Custom hooks (e.g., useAxiosSecure) ├── layouts/ # Layouts like Main, DashboardLayout ├── pages/ # All pages │ ├── Home/ # Homepage │ ├── Camps/ # AvailableCamps, CampDetails │ ├── Auth/ # Login, Register, PrivateRoute │ ├── Dashboard/ # All dashboard pages │ │ ├── Organizer/ # Organizer dashboard features │ │ └── Participant/ # Participant dashboard features ├── routes/ # Route definitions ├── utils/ # Helper functions ├── App.jsx ├── main.jsx └── index.css ``` </code></pre>
+├── assets/ # Images, logos, static files
+├── components/ # Reusable UI components
+├── context/ # React Contexts (e.g., AuthProvider)
+├── hooks/ # Custom hooks (e.g., useAxiosSecure)
+├── layouts/ # Layouts like Main, DashboardLayout
+├── pages/ # All pages
+│ ├── Home/ # Homepage
+│ ├── Camps/ # AvailableCamps, CampDetails
+│ ├── Auth/ # Login, Register, PrivateRoute
+│ ├── Dashboard/ # All dashboard pages
+│ │ ├── Organizer/ # Organizer dashboard features
+│ │ └── Participant/ # Participant dashboard features
+├── routes/ # Route definitions
+├── utils/ # Helper functions
+├── App.jsx
+├── main.jsx
+└── index.css
 
 ---
 
