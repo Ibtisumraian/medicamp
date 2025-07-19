@@ -11,6 +11,11 @@ MediCamp is a full-stack MERN application designed to streamline the organizatio
 
 ---
 
+## 🔐 Organizer Login Credentials
+
+- **Email:** kakashihatake@sharingan.com  
+- **Password:** asdF1234
+
 ---
 
 ##  Tech Stack
