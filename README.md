@@ -6,8 +6,8 @@ MediCamp is a full-stack MERN application designed to streamline the organizatio
 
 ##  Live Site
 
- [Visit the Live Site](https://medicamp-ce784.web.app)
- [Visit the Server Repo](https://github.com/Programming-Hero-Web-Course4/b11a12-server-side-Ibtisumraian)
+ - [Visit the Live Site](https://medicamp-ce784.web.app)
+ - [Visit the Server Repo](https://github.com/Programming-Hero-Web-Course4/b11a12-server-side-Ibtisumraian)
 
 ---
 
